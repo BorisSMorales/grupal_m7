@@ -76,17 +76,13 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'grupal_m7', 
+        'USER': 'grupal_m7',
+        'PASSWORD': 'martini123',
+        'HOST': 'localhost', 
+        'PORT': '5432',
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME':'postgresql',
-    #     'USER':'grupo4',
-    #     'PASSWORD':'martini123',
-    #     'HOST':'localhost',
-    #     'PORT':'5432'
-    # }
 }
 
 

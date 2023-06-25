@@ -1,0 +1,53 @@
+{% extends "telovendo3app/base.html"%}
+{% load static %}
+
+
+{% block titulo %}Formulario Contacto{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <div>    
+        <div class="hero is-secondary is-fullheight">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="columns is-centered">
+                        <div class="column is-4">
+                            <form action="" class="box">
+                                <h5 class="title is-5">Login</h5>
+                                <h6 class="subtitle is-6">Ingresa tus credenciales!</h6>
+                                <div class="field">
+                                    <label class="label" for="id_username">Usuario</label>
+                                    <div class="control">
+                                        <input type="text" class="input" id="id_username" name="username" placeholder="Usuario" required>
+                                        {% comment %} {{ form.username }} {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label" for="id_password">Contraseña</label>
+                                    <div class="control">
+                                        <input type="password" class="input" id="id_password" name="password" placeholder="Contraseña" required>
+                                        {% comment %} {{ form.password }} {% endcomment %}
+                                    </div>
+                                </div>
+                                {% if form.errors %}
+                                <div class="notification is-danger mt-3">
+                                    <h4>Errores</h4>
+                                    {{ form.errors }}
+                                </div>
+                                {% endif %}
+                                <div class="field">
+                                    <button type="submit" class="button is-danger mt-3">Ingresar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

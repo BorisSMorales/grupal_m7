@@ -1,0 +1,53 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    
+    <title>Home</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'Home' %}" class="logo"><i class="ri-store-2-line"></i><span>TeLOVEndo 💞</span>
+        </a>
+
+        <ul class="nav-bar">
+            <li><a href="{% url 'Home' %}" class="active">Home</a></li>
+            <li><a href="#">Acerca de Nosotros</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="{% url 'Contacto' %}">Contacto</a></li>
+        </ul>
+
+        <div class="main">
+            <a href="{% url 'Login' %}" class="user logo"><i class="ri-login-box-line"></i>Iniciar Sesión</a>
+            <a href="{% url 'Registro' %}" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+
+    </nav>
+
+    <section>
+        <h1>{% block title %}{%endblock%}</h1>
+    </section>
+    <section>
+        {% block content %}{% endblock%}
+    </section>
+
+    
+    
+    
+
+</body>
+<script type="text/javascript" src="{% static 'javascript/scripts.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</html>

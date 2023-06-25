@@ -1,0 +1,41 @@
+{% extends 'telovendo3app/base.html' %}
+{%load static%}
+
+{% block title %}
+    Formulario de contacto
+{% endblock %}
+
+
+{% block content %} 
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <form method="post">
+                {% csrf_token %}
+                {% for campo in formulario %}
+                <div class="field">
+                    <label class="label" for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                    <div class="control">
+                        {{ campo }}
+                    </div>
+                    {% if campo.help_text %}
+                    <p class="help">{{ campo.help_text }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% if mensajes and mensajes.enviado %}
+                <div class="notification is-success mt-3">
+                    {{ mensajes.resultado }}
+                </div>
+                {% endif %}
+                {% if mensajes and not mensajes.enviado %}
+                <div class="notification is-danger mt-3">
+                    {{ mensajes.resultado }}
+                </div>
+                {% endif %}
+                <div class="field">
+                    <button type="submit" class="button is-success mt-3">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

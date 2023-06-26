@@ -33,6 +33,11 @@ nav {
     transition: all .50s ease;
 }
 
+.divx{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .logo{
     display: flex;
     align-items: center;

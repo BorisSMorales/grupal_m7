@@ -29,7 +29,7 @@
 
         <div class="main">
             {% if user.is_authenticated %}
-            <a href="{% url 'Login' %}" class="user logo"><i class="ri-logout-box-line"></i></i>Cerrar Sesión</a>
+            <a href="{% url 'logout' %}" class="user logo"><i class="ri-logout-box-line"></i></i>Cerrar Sesión</a>
             {% else %}
             <a href="{% url 'Login' %}" class="user logo"><i class="ri-login-box-line"></i>Iniciar Sesión</a>
             <a href="#" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
@@ -38,14 +38,11 @@
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
 
-    </nav>
-
-    <section>
-        <h1>{% block title %}{%endblock%}</h1>
-    </section>
-    <section>
+    </nav class='divx'>
+    
+    <div>
         {% block content %}{% endblock%}
-    </section>
+    </div>
 
     
     

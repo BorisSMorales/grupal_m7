@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 # Create your views here.
 
 def home(request):
-    return render(request, 'telovendo3app/base.html')
+    return render(request, 'telovendo3app/home.html')
 
 def lista_clientes(request) -> HttpResponse:
     users = User.objects.all()

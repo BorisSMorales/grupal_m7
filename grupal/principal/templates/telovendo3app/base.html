@@ -24,12 +24,17 @@
             <li><a href="{% url 'Home' %}" class="active">Home</a></li>
             <li><a href="#">Acerca de Nosotros</a></li>
             <li><a href="#">Productos</a></li>
-            <li><a href="{% url 'Contacto' %}">Contacto</a></li>
+            <li><a href="#">Contacto</a></li>
         </ul>
 
         <div class="main">
+            {% if user.is_authenticated %}
+            <a href="{% url 'Login' %}" class="user logo"><i class="ri-logout-box-line"></i></i>Cerrar Sesión</a>
+            {% else %}
             <a href="{% url 'Login' %}" class="user logo"><i class="ri-login-box-line"></i>Iniciar Sesión</a>
-            <a href="{% url 'Registro' %}" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
+            <a href="#" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
+            {% endif %}
+            
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
 

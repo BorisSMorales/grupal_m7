@@ -3,7 +3,6 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from principal.forms import FormularioContacto, LoginForm, RegistroForm
 from django.views.generic import TemplateView
-from principal.models import Contacto
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy

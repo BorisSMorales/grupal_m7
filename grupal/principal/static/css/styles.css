@@ -28,7 +28,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: transparent;
+    background: var(--bg-color);
     padding: 28px 12%;
     transition: all .50s ease;
 }

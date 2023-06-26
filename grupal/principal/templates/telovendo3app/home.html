@@ -11,13 +11,14 @@
         <div class=" is-4">
           <div>
             <br><br><br><br>
+                {% if user.is_authenticated %}
+                  <h3>Bienvenido {{ user.first_name }} {{ user.last_name }}</h3>
+                {% endif %}
             <div class="columns is-centered">
               <div class="column is-two-thirds">
                 <h1 class="title has-text-centered">TeLOVEndo 💞</h1>
                 <p class="subtitle has-text-centered">Comercio especializado en diversos productos para el hogar, desde tecnología hasta línea blanca</p>
-                {% if user.is_authenticated %}
-                  <h1 class="title">Bienvenido {{ user.first_name }} {{ user.last_name }}</h1>
-                {% endif %}
+                
               </div>
             </div>
           </div>

@@ -28,16 +28,15 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: transparent;
+    background: var(--bg-color);
     padding: 28px 12%;
     transition: all .50s ease;
 }
 
-.divx{
-    margin-top: 20px;
-    margin-bottom: 20px;
+footer{
+    color: var(--text-color);
+    
 }
-
 .logo{
     display: flex;
     align-items: center;

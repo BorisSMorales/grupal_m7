@@ -18,41 +18,7 @@ def lista_clientes(request) -> HttpResponse:
     users = User.objects.all()
     return render(request, 'telovendo3app/clientes.html', {'users': users})
 
-class ContactoView(TemplateView):
-    template_name = 'telovendo3app/contacto.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['formulario'] = FormularioContacto()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        form = FormularioContacto(request.POST)
-        mensajes = {
-            "enviado": False,
-            "resultado": None
-        }
-        if form.is_valid():
-            nombre = form.cleaned_data['nombre']
-            email = form.cleaned_data['email']
-            empresa = form.cleaned_data['empresa']
-            asunto = form.cleaned_data['asunto']
-            mensaje = form.cleaned_data['mensaje']
-
-            registro = Contacto(
-                nombre=nombre,
-                email=email,
-                empresa=empresa,
-                asunto=asunto,
-                mensaje=mensaje
-            )
-            registro.save()
-
-            mensajes = { "enviado": True, "resultado": "Mensaje enviado correctamente" }
-        else:
-            mensajes = { "enviado": False, "resultado": form.errors }
-        return render(request, self.template_name, { "formulario": form, "mensajes": mensajes })
-    
 class Ingreso(TemplateView):
     template_name = 'registration/login.html'
 
@@ -75,20 +41,3 @@ class Ingreso(TemplateView):
         else:
             return render(request, self.template_name, { "form": form })
 
-class RegistroView(TemplateView):
-    template_name = 'registration/registro.html'
-    form_class = RegistroForm
-    success_url = reverse_lazy('Home')
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-            login(request, user)
-            user.groups.add(Group.objects.get(name='grupo1'))  # Asignar usuario al grupo "grupo1"
-            
-            return redirect(self.success_url)
-            
-
-        return render(request, self.template_name, {'form': form})    

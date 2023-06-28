@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'grupal_m7', 
-        'USER': 'grupal_m7',
-        'PASSWORD': 'martini123',
-        'HOST': 'localhost', 
+        'NAME': 'awake2023_grupo4', 
+        'USER': 'grupo4',
+        'PASSWORD': 'adalid.2023',
+        'HOST': '45.173.130.120', 
         'PORT': '5432',
     }
 }

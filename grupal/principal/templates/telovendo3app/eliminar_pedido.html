@@ -3,14 +3,22 @@
 
 
 {% block content %}
-
-<h1>Eliminar Pedido</h1>
-<p>¿Estás seguro de que deseas eliminar el pedido {{ pedido.id }}?</p>
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Eliminar Pedido">
-</form>
-
+<section class="gradient-custom">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 ">
+                <div class="card bg-dark text-white">
+                    <h2>Eliminar Pedido</h2>
+                    <p>¿Estás seguro de que deseas eliminar el pedido {{ pedido.id }}?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit button" class="btn btn-danger"  value="Eliminar Pedido">Eliminar</button>
+                    </form>
+                </div>    
+            </div>
+        </div>    
+    </div>
+</section>    
 
 {% endblock %}

@@ -8,46 +8,39 @@
 
 <form method="post">
     {% csrf_token %}
-    <div>    
-        <div class="hero is-secondary is-fullheight">
-            <div class="hero-body">
-                <div class="container">
-                    <div class="columns is-centered">
-                        <div class="column is-4">
-                            <form action="" class="box">
-                                <h5 class="title is-5">Login</h5>
-                                <h6 class="subtitle is-6">Ingresa tus credenciales!</h6>
-                                <div class="field">
-                                    <label class="label" for="id_username">Usuario</label>
-                                    <div class="control">
-                                        <input type="text" class="input" id="id_username" name="username" placeholder="Usuario" required>
-                                        {% comment %} {{ form.username }} {% endcomment %}
-                                    </div>
+    <section class="gradient-custom">
+        <div class="container ">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <div class="mb-md-5 mt-md-4 pb-5">
+                                <h2 class="fw-bold mb-2 text-uppercase">Login 💞</h2>
+                                <p class="text-white-50 mb-5">Por favor ingresa tu usuario y contraseña!</p>
+                                <div class="form-outline form-white mb-4 control">
+                                    <input type="text" id="id_username" class="form-control form-control-lg input" name="username" placeholder="Usuario" required>
+                                    <label class="form-label label" for="id_username">Usuario</label>
                                 </div>
-                                <div class="field">
-                                    <label class="label" for="id_password">Contraseña</label>
-                                    <div class="control">
-                                        <input type="password" class="input" id="id_password" name="password" placeholder="Contraseña" required>
-                                        {% comment %} {{ form.password }} {% endcomment %}
-                                    </div>
+                                <div class="form-outline form-white mb-4 field">
+                                    <input type="password" id="id_password" class="form-control form-control-lg input" name="password" placeholder="Contraseña" required>
+                                    <label class="form-label label" for="id_password">Contraseña</label>
                                 </div>
                                 {% if form.errors %}
                                 <div class="notification is-danger mt-3">
-                                    <h4>Errores</h4>
+                                    <h4>Error</h4>
                                     {{ form.errors }}
                                 </div>
                                 {% endif %}
                                 <div class="field">
-                                    <button type="submit" class="button is-danger mt-3">Ingresar</button>
+                                    <button type="submit button" class="btn btn-danger">Ingresar</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </section>
 
 
 {% endblock %}

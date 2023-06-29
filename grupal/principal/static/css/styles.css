@@ -36,7 +36,7 @@ nav {
 
 section{
     text-align: left;
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 section label {
@@ -52,6 +52,8 @@ section select{
 } 
 
 section .card{
+    align-items: center;
+    padding: 5px;
     background: var(--bg-color);
     color: var(--text-color);
     border-color: #e60404;

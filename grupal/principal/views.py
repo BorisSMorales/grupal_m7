@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render,get_object_or_404
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from principal.forms import FormularioContacto, LoginForm, RegistroForm,ActualizarEstadoPedidoForm
 from django.views.generic import TemplateView
@@ -81,6 +82,14 @@ class AgregarPedidoView(View):
             # Actualizar el total del pedido
             pedido.total = DetallePedido.objects.filter(pedido=pedido).aggregate(total=Sum('subtotal'))['total']
             pedido.save()
+
+            # Envío de correo electrónico
+            subject = 'Nuevo pedido agregado'
+            message = f"Se ha agregado un nuevo pedido.\n\nCliente: {cliente}\nProducto: {producto}\nCantidad: {cantidad}\nPrecio unitario: {precio_unitario}"
+            from_email = 'talento@fabricadecodigo.dev'
+            to_email = ['arayadiaz.ac@gmail.com'] 
+            #to_email = [request.user.email]
+            send_mail(subject, message, from_email, to_email)
 
             return redirect('lista_pedidos')
 

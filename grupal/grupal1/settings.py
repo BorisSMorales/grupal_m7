@@ -140,3 +140,13 @@ LOGIN_REDIRECT_URL = 'Home'
 LOGOUT_REDIRECT_URL = 'Login'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+
+
+#Configuración de Correo
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.fabricadecodigo.dev'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'talento@fabricadecodigo.dev'
+EMAIL_HOST_PASSWORD = 'talento.,2023'

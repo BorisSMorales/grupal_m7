@@ -38,9 +38,11 @@ class Producto(models.Model):
 
 
 class Pedido(models.Model):
-    fecha_pedido = models.DateField()
+    fecha_pedido = models.DateField(auto_now_add=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
+    estado = models.CharField(max_length=50,null=False,blank=False)
+
 
     def __str__(self):
         return f"Pedido #{self.id}"
@@ -51,4 +53,3 @@ class DetallePedido(models.Model):
     cantidad = models.IntegerField()
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
-    estado = models.CharField(max_length=50,null=False,blank=False)

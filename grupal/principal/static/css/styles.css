@@ -65,9 +65,7 @@ section .card{
 max-height: 50vh;
 }
 
-table{
-    display: flex;
-}
+
 
 .logo{
     display: flex;

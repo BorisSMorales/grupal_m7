@@ -26,6 +26,9 @@
                     <td>{{ pedido.estado }}</td>
                     <td>{{ pedido.total }}</td>
                     <td>
+                        <a href="{% url 'actualizar_estado_pedido' pedido.id %}">Editar Estado</a>
+                    </td>
+                    <td>
                         <a href="{% url 'eliminar_pedido' pedido.id %}">Eliminar</a>
                     </td>
                     </tr>

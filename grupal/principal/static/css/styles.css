@@ -31,15 +31,48 @@ nav {
     background: var(--bg-color);
     padding: 28px 12%;
     transition: all .50s ease;
-}
-
-footer{
-    color: var(--text-color);
     
 }
+
+section{
+    text-align: left;
+    padding-top: 150px;
+}
+
+section label {
+    width: 100px;
+}
+
+section .table{
+    border-radius: 25px;
+}
+
+section select{
+    width: 315px;
+} 
+
+section .card{
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-color: #e60404;
+    -webkit-box-shadow: 2px 2px 5px 2px #FF0000;
+    box-shadow: 2px 2px 5px 2px #FF0000;
+
+}
+
+
+.footer{
+max-height: 50vh;
+}
+
+table{
+    display: flex;
+}
+
 .logo{
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .logo i{
@@ -56,6 +89,7 @@ footer{
 
 .nav-bar{
     display: flex;
+    text-decoration: none !important;
 }
 
 .nav-bar a{
@@ -65,6 +99,7 @@ footer{
     padding: 5px 0;
     margin: 0px 30px;
     transition: all .50s ease;
+    text-decoration: none !important;
 }
 
 .nav-bar a:hover{
@@ -87,6 +122,7 @@ footer{
     font-size: 1.1rem;
     font-weight: 500;
     transition: all .50s ease;
+    text-decoration: none;
 }
 
 .user{

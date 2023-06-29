@@ -1,0 +1,16 @@
+{% extends 'telovendo3app/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<h1>Eliminar Pedido</h1>
+<p>¿Estás seguro de que deseas eliminar el pedido {{ pedido.id }}?</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Eliminar Pedido">
+</form>
+
+
+{% endblock %}

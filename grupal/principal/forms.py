@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Cliente, Producto
 
 class FormularioContacto(forms.Form):
     nombre = forms.CharField(label="Nombre", max_length=50, required=True,
@@ -53,3 +54,12 @@ class RegistroForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+class AgregarPedidoForm(forms.Form):
+    cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())
+    producto = forms.ModelChoiceField(queryset=Producto.objects.all())
+    cantidad = forms.IntegerField()
+    precio_unitario = forms.DecimalField(decimal_places=2)
+
+class EliminarPedidoForm(forms.Form):
+    confirmacion = forms.BooleanField(required=True)

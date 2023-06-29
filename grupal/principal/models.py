@@ -29,12 +29,12 @@ class CategoriaProducto(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=100, null=False,blank=False)
     categoria = models.ForeignKey(CategoriaProducto, on_delete=models.CASCADE)
-    precio = models.IntegerField(max_digits=10, null=False,blank=False)
+    precio = models.IntegerField(null=False,blank=False)
     disponibilidad = models.IntegerField(null=False,blank=False)
     descripcion = models.CharField(max_length=200,null=True,blank=True)
 
     def __str__(self):
-        return self.nombr
+        return self.nombre
 
 
 class Pedido(models.Model):

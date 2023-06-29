@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Editar Estado del Pedido</title>
+</head>
+<body>
+  <div class="my-5">
+    <h2>Editar Estado del Pedido</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+</body>
+</html>

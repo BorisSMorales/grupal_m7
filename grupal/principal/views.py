@@ -1,8 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.models import User
-from django.views import View
-from principal.forms import FormularioContacto, LoginForm, RegistroForm, AgregarPedidoForm
+from principal.forms import FormularioContacto, LoginForm, RegistroForm,ActualizarEstadoPedidoForm
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import authenticate, login
@@ -11,6 +10,8 @@ from django.contrib.auth.models import Group
 from .models import DetallePedido, Pedido,Producto
 from django.views.generic import ListView
 from django.db.models import Sum
+from django.views import View
+from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm
 
 
 # Create your views here.
@@ -45,6 +46,7 @@ class Ingreso(TemplateView):
         else:
             return render(request, self.template_name, { "form": form })
 
+
 class ListaPedidosView(TemplateView):
     template_name = 'telovendo3app/lista_pedidos.html'
 
@@ -52,8 +54,6 @@ class ListaPedidosView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['pedidos'] = Pedido.objects.all()
         return context
-
-
 
 class AgregarPedidoView(View):
     template_name = 'telovendo3app/agregar_pedido.html'
@@ -78,6 +78,7 @@ class AgregarPedidoView(View):
             detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
             detalle_pedido.save()
 
+            # Actualizar el total del pedido
             pedido.total = DetallePedido.objects.filter(pedido=pedido).aggregate(total=Sum('subtotal'))['total']
             pedido.save()
 
@@ -96,3 +97,25 @@ class EliminarPedidoView(View):
         pedido = get_object_or_404(Pedido, id=pedido_id)
         pedido.delete()
         return redirect('lista_pedidos')
+
+class ActualizarEstadoPedidoView(View):
+    template_name = 'telovendo3app/editar_estado.html'
+    form_class = ActualizarEstadoPedidoForm
+
+    def get(self, request, pedido_id, *args, **kwargs):
+        pedido = get_object_or_404(Pedido, id=pedido_id)
+        form = self.form_class(instance=pedido)
+        opciones_estado = [
+            {'valor': 'pendiente', 'etiqueta': 'Pendiente'},
+            {'valor': 'en proceso', 'etiqueta': 'En proceso'},
+            {'valor': 'enviado', 'etiqueta': 'Enviado'},
+            {'valor': 'entregado', 'etiqueta': 'Entregado'},
+        ]
+        return render(request, self.template_name, {'pedido': pedido, 'form': form, 'opciones_estado': opciones_estado})
+
+    def post(self, request, pedido_id, *args, **kwargs):
+        pedido = get_object_or_404(Pedido, id=pedido_id)
+        form = self.form_class(request.POST, instance=pedido)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_pedidos')

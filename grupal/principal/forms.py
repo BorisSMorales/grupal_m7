@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Cliente, Producto
+from .models import Cliente, Producto,Pedido
 
 class FormularioContacto(forms.Form):
     nombre = forms.CharField(label="Nombre", max_length=50, required=True,
@@ -63,3 +63,18 @@ class AgregarPedidoForm(forms.Form):
 
 class EliminarPedidoForm(forms.Form):
     confirmacion = forms.BooleanField(required=True)
+
+
+OPCIONES_ESTADO = [
+    ('pendiente', 'Pendiente'),
+    ('procesando', 'En proceso'),
+    ('enviado', 'Enviado'),
+    ('entregado', 'Entregado'),
+]
+
+class ActualizarEstadoPedidoForm(forms.ModelForm):
+    estado = forms.ChoiceField(choices=OPCIONES_ESTADO)
+    
+    class Meta:
+        model = Pedido
+        fields = ['estado']

@@ -36,7 +36,7 @@ nav {
 
 section{
     text-align: left;
-    padding-top: 150px;
+    padding-top: 100px;
 }
 
 section label {
@@ -57,15 +57,16 @@ section .card{
     border-color: #e60404;
     -webkit-box-shadow: 2px 2px 5px 2px #FF0000;
     box-shadow: 2px 2px 5px 2px #FF0000;
-
+    
 }
 
+section .titulo{
+    justify-content: center;
+}
 
 .footer{
 max-height: 50vh;
 }
-
-
 
 .logo{
     display: flex;

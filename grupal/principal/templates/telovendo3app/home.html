@@ -3,87 +3,74 @@
 
 
 {% block content %}
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">TeLOVEndo 💞</h1>
+        <p>Comercio especializado en diversos productos para el hogar, desde tecnología hasta vestuario.</p>
+        {% if user.is_authenticated %}
+          <h1> Bienvenido {{ user.first_name }} {{ user.last_name }} </h1>
+        {% endif %}
+      </div>
+    </div>
+  </section>
 
-<div class="hero is-secondary is-fullheight-with-navbar">
-  <div class="hero-body">
+
     <div class="container">
-      <div class="columns is-centered">
-        <div class=" is-4">
-          <div>
-            <br><br><br><br>
-                {% if user.is_authenticated %}
-                  <h3>Bienvenido {{ user.first_name }} {{ user.last_name }}</h3>
-                {% endif %}
-            <div class="columns is-centered">
-              <div class="column is-two-thirds">
-                <h1 class="title has-text-centered">TeLOVEndo 💞</h1>
-                <p class="subtitle has-text-centered">Comercio especializado en diversos productos para el hogar, desde tecnología hasta línea blanca</p>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card">
+            <img src="{% static 'img/portadacelulares2022.jpg' %}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <title>Tecnología</title>
+            <rect width="100%" height="100%" fill="#55595c"/>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+
+            <div class="card-body">
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Ver productos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <title>Línea Blanca</title>
+            <img src="{% static 'img/Linea-blanca.jpg' %}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#55595c"/>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+
+            <div class="card-body">
+              <p class="card-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Ver productos</button>
+                </div>
                 
               </div>
             </div>
           </div>
-          <section class="section">
-            <div class="container content-container">
-              <div class="columns is-multiline">
-                <div class="column is-one-third">
-                  <div class="card">
-                    <div class="card-image">
-                      <figure class="image is-4by3">
-                        <img src="{% static 'img/portadacelulares2022.jpg' %}" alt="Tecnología">
-                      </figure>
-                    </div>
-                    <div class="card-content">
-                      <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                      </div>
-                      <div class="has-text-centered">
-                        <button class="button is-primary">Ver productos</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="column is-one-third">
-                  <div class="card">
-                    <div class="card-image">
-                      <figure class="image is-4by3">
-                        <img src="{% static 'img/Linea-blanca.jpg' %}" alt="Línea Blanca">
-                      </figure>
-                    </div>
-                    <div class="card-content">
-                      <div class="content">
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                      </div>
-                      <div class="has-text-centered">
-                        <button class="button is-primary">Ver productos</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="column is-one-third">
-                  <div class="card">
-                    <div class="card-image">
-                      <figure class="image is-4by3">
-                        <img src="{% static 'img/calzado_1.jpg' %}" alt="Calzado">
-                      </figure>
-                    </div>
-                    <div class="card-content">
-                      <div class="content">
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-                      </div>
-                      <div class="has-text-centered">
-                        <button class="button is-primary">Ver productos</button>
-                      </div>
-                    </div>
-                  </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="{% static 'img/calzado_1.jpg' %}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <title>Calzado</title>
+            <rect width="100%" height="100%" fill="#55595c"/>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+            <div class="card-body">
+              <p class="card-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Ver productos</button>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
         </div>
-      </div>      
+      </div>
     </div>
-  </div>
-</div>  
+
+
 {% endblock %}

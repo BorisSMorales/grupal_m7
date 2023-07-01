@@ -85,10 +85,10 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'awake2023_grupo4',
-        'USER': 'grupo4',
-        'PASSWORD': 'adalid.2023',
-        'HOST': '45.173.130.120',
+        'NAME': 'db_test',
+        'USER': 'usuariotest',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 

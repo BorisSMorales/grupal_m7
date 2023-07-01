@@ -11,16 +11,16 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                     <div class="card-body">
-                      <h2>Editar Estado del Pedido</h2>
-                      <form method="post">
-                      {% csrf_token %}
-                      {{ form.as_p }}
-                      <button type="submit" class="btn btn-danger">Guardar</button>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
+                        <h2>Editar Estado del Pedido</h2>
+                        <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-danger">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>        
 {% endblock %}

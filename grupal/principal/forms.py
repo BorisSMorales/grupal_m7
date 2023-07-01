@@ -78,3 +78,8 @@ class ActualizarEstadoPedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
         fields = ['estado']
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['nombre', 'categoria', 'precio', 'disponibilidad', 'descripcion']

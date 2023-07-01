@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from principal.views import home, Ingreso, AgregarPedidoView, EliminarPedidoView, ListaPedidosView, ActualizarEstadoPedidoView
+from principal.views import home, Ingreso, AgregarPedidoView, EliminarPedidoView, ListaPedidosView, ActualizarEstadoPedidoView, ListaProductosView, EliminarProductoView, CrearProductoView
 
 
 urlpatterns = [
@@ -29,4 +29,7 @@ urlpatterns = [
     path('eliminar_pedido/<int:pedido_id>/', EliminarPedidoView.as_view(), name='eliminar_pedido'),
     path('pedidos/', ListaPedidosView.as_view(), name='lista_pedidos'),
     path('pedidos/actualizar_estado/<int:pedido_id>/', ActualizarEstadoPedidoView.as_view(), name='actualizar_estado_pedido'),
+    path('productos/', ListaProductosView.as_view(), name='lista_productos'),
+    path('productos/crear/', CrearProductoView.as_view(), name='crear_producto'),
+    path('productos/eliminar/<int:producto_id>/', EliminarProductoView.as_view(), name='eliminar_producto')
 ]

@@ -13,6 +13,7 @@ from django.views.generic import ListView
 from django.db.models import Sum
 from django.views import View
 from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm
+from .forms import ProductoForm
 
 
 # Create your views here.
@@ -128,3 +129,69 @@ class ActualizarEstadoPedidoView(View):
         if form.is_valid():
             form.save()
             return redirect('lista_pedidos')
+        
+
+class ListaProductosView(TemplateView):
+    template_name = 'telovendo3app/lista_productos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['productos'] = Producto.objects.all()
+        return context
+
+
+class CrearProductoView(TemplateView):
+    template_name = 'telovendo3app/crear_producto.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ProductoForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_productos')
+        else:
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+
+
+class EditarProductoView(TemplateView):
+    template_name = 'telovendo3app/editar_producto.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        producto_id = self.kwargs['producto_id']
+        producto = Producto.objects.get(id=producto_id)
+        context['form'] = ProductoForm(instance=producto)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        producto_id = self.kwargs['producto_id']
+        producto = Producto.objects.get(id=producto_id)
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_productos')
+        else:
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
+
+
+class EliminarProductoView(TemplateView):
+    template_name = 'telovendo3app/eliminar_producto.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        producto_id = self.kwargs['producto_id']
+        producto = Producto.objects.get(id=producto_id)
+        context['producto'] = producto
+        return context
+
+    def post(self, request, *args, **kwargs):
+        producto_id = self.kwargs['producto_id']
+        producto = Producto.objects.get(id=producto_id)
+        producto.delete()
+        return redirect('lista_productos')

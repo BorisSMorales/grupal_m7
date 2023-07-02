@@ -50,10 +50,11 @@ class RegistroForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
     email = forms.EmailField(required=True)
+    telefono = forms.CharField(max_length=20, required=True)  # Agregar campo telefono
 
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        model = Cliente
+        fields = ('username', 'first_name', 'last_name', 'email', 'telefono', 'password1', 'password2')
 
 class AgregarPedidoForm(forms.Form):
     cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())

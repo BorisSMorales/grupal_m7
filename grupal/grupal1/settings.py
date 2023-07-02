@@ -150,3 +150,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'talento@fabricadecodigo.dev'
 EMAIL_HOST_PASSWORD = 'talento.,2023'
+
+#Configuracion usuario custom
+
+

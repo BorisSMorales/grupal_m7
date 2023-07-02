@@ -1,25 +1,37 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 
 # Create your models here.
 
 
-class Cliente(models.Model):
-    nombre = models.CharField(max_length=100,null=False,blank=False)
-    telefono = models.CharField(max_length=20,null=False,blank=False)
-    correo_electronico = models.EmailField(max_length=100,null=False,blank=False)
+# class Cliente(models.Model):
+#     nombre = models.CharField(max_length=100,null=False,blank=False)
+#     telefono = models.CharField(max_length=20,null=False,blank=False)
+#     correo_electronico = models.EmailField(max_length=100,null=False,blank=False)
 
-    def __str__(self):
-        return self.nombre
+#     def __str__(self):
+#         return self.nombre
 
+
+class Cliente(User):
+    telefono = models.CharField(max_length=20, null=False, blank=False)
+    nombre = models.CharField(max_length=100, null=False, blank=False)
+    correo_electronico = models.EmailField(max_length=100, null=False, blank=False)
+
+    def save(self, *args, **kwargs):
+        self.telefono = self.telefono
+        self.nombre = self.username  # Asignar el valor de username a nombre
+        self.correo_electronico = self.email  # Asignar el valor de email a correo_electronico
+        super().save(args, **kwargs)  # Llamar al método save() de la clase padre
+
+    def str(self):
+        return self.username
 
 # class Cliente(AbstractUser):
 #     telefono = models.CharField(max_length=20, null=False, blank=False)
-#     correo_electronico = models.EmailField(max_length=100, null=False, blank=False)
 
-#     def __str__(self):
+#     def str(self):
 #         return self.username
-
 
 class DireccionCliente(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)

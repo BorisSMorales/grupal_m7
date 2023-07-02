@@ -1,0 +1,66 @@
+{% extends "telovendo3app/base.html"%}
+{% load static %}
+
+{% block navegacion%}
+
+{% for categoria in categorias %}
+    <li class="nav-item">
+    <a class="nav-link " href="{% url 'tecnologia' idcategoria=categoria.idcategoria %}">{{ categoria.nombre }}</a>
+    </li>
+{% endfor %}
+
+{% endblock %}
+
+{% block titulo %}Formulario de registro{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="card" style="width: 30rem;">
+    <div class="card-body">
+        <h5 class="card-title">Registro</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Registro de usuario</h6>
+        <div class="form-group">
+        <label for="id_username">Usuario</label>
+        <input type="text" class="form-control" id="id_username" name="username" placeholder="Usuario" required>
+        {% comment %} {{ form.username }} {% endcomment %}
+        </div>
+        <div class="form-group">
+            <label for="id_password2">Contraseña</label>
+            <input type="password" class="form-control" id="id_password1" name="password1" placeholder="Contraseña" required>
+            {% comment %} {{ form.password }} {% endcomment %}
+            </div>
+            <div class="form-group">
+            <label for="id_password2">Repita la contraseña</label>
+            <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Repita la contraseña" required>
+            {% comment %} {{ form.password }} {% endcomment %}
+            </div>
+        <div class="form-group">
+        <label for="id_firsname">Nombre</label>
+        <input type="text" class="form-control" id="id_firstname" name="first_name" placeholder="Ingrese nombre" required>
+        {% comment %} {{ form.username }} {% endcomment %}
+        </div>
+        <div class="form-group">
+        <label for="id_lastname">Apellido</label>
+        <input type="text" class="form-control" id="id_lastname" name="last_name" placeholder="Ingrese apellido" required>
+        {% comment %} {{ form.username }} {% endcomment %}
+        </div>
+        
+        <div class="form-group">
+        <label for="id_password2">Ingrese su email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese un email" required>
+        {% comment %} {{ form.password }} {% endcomment %}
+        </div>
+        {% if form.errors %}
+        <div class="alert alert-danger mt-3" role="alert">
+        <h4>Errores</h4>
+        {{ form.errors }}
+        </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary mt-3">Registrar</button>
+    </div>
+    </div>
+</form>
+
+{% endblock %}
+

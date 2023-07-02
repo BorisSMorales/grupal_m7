@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -10,6 +11,14 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+# class Cliente(AbstractUser):
+#     telefono = models.CharField(max_length=20, null=False, blank=False)
+#     correo_electronico = models.EmailField(max_length=100, null=False, blank=False)
+
+#     def __str__(self):
+#         return self.username
 
 
 class DireccionCliente(models.Model):

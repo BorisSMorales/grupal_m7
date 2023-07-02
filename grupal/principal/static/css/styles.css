@@ -76,9 +76,13 @@ section .titulo{
     justify-content: center;
 }
 
-.footer{
-max-height: 50vh;
+footer {
+    margin-top: 50px;
+    bottom: 0;
+    -webkit-box-shadow: 0 -10px 5px 0 #FF0000;
+    box-shadow: 0 -10px 5px 0 #FF0000;
 }
+
 
 .logo{
     display: flex;

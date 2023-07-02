@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.contrib.auth.models import Group
-from .models import DetallePedido, Pedido,Producto
+from .models import DetallePedido, Pedido,Producto, Cliente
 from django.views.generic import ListView
 from django.db.models import Sum
 from django.views import View
@@ -24,6 +24,7 @@ def home(request):
 def lista_clientes(request) -> HttpResponse:
     users = User.objects.all()
     return render(request, 'telovendo3app/clientes.html', {'users': users})
+
 
 
 class Ingreso(TemplateView):
@@ -195,3 +196,30 @@ class EliminarProductoView(TemplateView):
         producto = Producto.objects.get(id=producto_id)
         producto.delete()
         return redirect('lista_productos')
+    
+class RegistroView(TemplateView):
+    template_name = 'registration/registro.html'
+    form_class = RegistroForm
+    success_url = reverse_lazy('Home')
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # Crear instancia de Cliente
+            cliente = Cliente(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email'],
+                telefono=form.cleaned_data['telefono'],  # Obtener valor de telefono
+            )
+            cliente.set_password(form.cleaned_data['password1'])
+            cliente.save()
+
+            # Autenticar y realizar inicio de sesión
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            login(request, user)
+
+            return redirect(self.success_url)
+
+        return render(request, self.template_name, {'form': form})

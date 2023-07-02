@@ -1,0 +1,67 @@
+{% extends "telovendo3app/base.html"%}
+{% load static %}
+
+
+
+{% block titulo %}Registro{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <section class="gradient-custom">
+        <div class="container ">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white">
+                        <h2 class="card-title">Registro 💞</h2>
+                        <h6 class="card-subtitle mb-2 text-body-primary">Ingresa tus Datos</h6>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_username">Usuario</label>
+                            <input type="text" class="form-control" id="id_username" name="username" placeholder="Usuario" required>
+                            {% comment %} {{ form.username }} {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_password2">Contraseña</label>
+                            <input type="password" class="form-control" id="id_password1" name="password1" placeholder="Contraseña" required>
+                            {% comment %} {{ form.password }} {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_password2">Repita la contraseña</label>
+                            <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Repita la contraseña" required>
+                            {% comment %} {{ form.password }} {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_firstname">Nombre</label>
+                            <input type="text" class="form-control" id="id_firstname" name="first_name" placeholder="Ingrese nombre" required>
+                            {% comment %} {{ form.username }} {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_lastname">Apellido</label>
+                            <input type="text" class="form-control" id="id_lastname" name="last_name" placeholder="Ingrese apellido" required>
+                            {% comment %} {{ form.username }} {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_email">Ingrese su email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese un email" required>
+                            {% comment %} {{ form.password }} {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registro" for="id_telefono">Ingrese su numero</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Numero" required>
+                            {% comment %} {{ form.password }} {% endcomment %}
+                        </div>
+                        {% if form.errors %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <h4>Errores</h4>
+                            {{ form.errors }}
+                        </div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-danger mt-3">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>      
+</form>
+
+{% endblock %}

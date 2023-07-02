@@ -43,6 +43,15 @@ section label {
     width: 100px;
 }
 
+section label {
+    width: 100px;
+    margin-top: 15px;
+}
+
+section .label-registro{
+    width: 200px;
+}
+
 section .table{
     border-radius: 25px;
 }
@@ -59,16 +68,21 @@ section .card{
     border-color: #e60404;
     -webkit-box-shadow: 2px 2px 5px 2px #FF0000;
     box-shadow: 2px 2px 5px 2px #FF0000;
-    
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 section .titulo{
     justify-content: center;
 }
 
-.footer{
-max-height: 50vh;
+footer {
+    margin-top: 50px;
+    bottom: 0;
+    -webkit-box-shadow: 0 -10px 5px 0 #FF0000;
+    box-shadow: 0 -10px 5px 0 #FF0000;
 }
+
 
 .logo{
     display: flex;

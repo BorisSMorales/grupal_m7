@@ -34,7 +34,7 @@
             <a href="{% url 'logout' %}" class="user logo"><i class="ri-logout-box-line"></i>Cerrar Sesión</a>
             {% else %}
             <a href="{% url 'Login' %}" class="user logo"><i class="ri-login-box-line"></i>Iniciar Sesión</a>
-            <a href="#" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
+            <a href="{% url 'Registro' %}" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
             {% endif %}
             
             <div class="bx bx-menu" id="menu-icon"></div>
@@ -46,6 +46,12 @@
         {% block content %}{% endblock%}
     </section>
 
+    
+    <footer class="bg-dark text-center text-lg-start text-white">
+        <div class="text-center p-3" style="background-color:#222327">
+            <h5>TeLOVEendo 💞, Grupo 4</h5>
+        </div>
+    </footer>
     
     
 

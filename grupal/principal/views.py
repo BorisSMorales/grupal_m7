@@ -25,6 +25,11 @@ def lista_clientes(request) -> HttpResponse:
     users = User.objects.all()
     return render(request, 'telovendo3app/clientes.html', {'users': users})
 
+def Registro(request):
+    return render(request, 'registration/registro.html')
+
+
+
 
 class Ingreso(TemplateView):
     template_name = 'registration/login.html'

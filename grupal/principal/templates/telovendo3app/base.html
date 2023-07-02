@@ -32,7 +32,7 @@
             <a href="{% url 'logout' %}" class="user logo"><i class="ri-logout-box-line"></i></i>Cerrar Sesión</a>
             {% else %}
             <a href="{% url 'Login' %}" class="user logo"><i class="ri-login-box-line"></i>Iniciar Sesión</a>
-            <a href="#" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
+            <a href="{% url 'Registro' %}" class="logo"><i class="ri-user-add-fill"></i>Registrarse</a>
             {% endif %}
             
             <div class="bx bx-menu" id="menu-icon"></div>

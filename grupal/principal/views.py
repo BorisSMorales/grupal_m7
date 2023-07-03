@@ -14,6 +14,7 @@ from django.db.models import Sum
 from django.views import View
 from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm
 from .forms import ProductoForm
+from .models import DireccionCliente
 
 
 # Create your views here.
@@ -63,7 +64,8 @@ class AgregarPedidoView(View):
     form_class = AgregarPedidoForm
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()
+        cliente_id = request.GET.get('cliente_id')
+        form = self.form_class(cliente=cliente_id)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -73,13 +75,17 @@ class AgregarPedidoView(View):
             producto = form.cleaned_data['producto']
             cantidad = form.cleaned_data['cantidad']
             precio_unitario = form.cleaned_data['precio_unitario']
-            
+            direccion = form.cleaned_data['direccion']  # Obtener la dirección ingresada en el formulario
             pedido = Pedido(cliente=cliente, estado='Pendiente', total=0)
             pedido.save()
 
             detalle_pedido = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=precio_unitario)
             detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
             detalle_pedido.save()
+
+            # Guardar la dirección asociada al cliente en la base de datos
+            direccion_cliente = DireccionCliente(cliente=cliente, direccion=direccion)
+            direccion_cliente.save()
 
             # Actualizar el total del pedido
             pedido.total = DetallePedido.objects.filter(pedido=pedido).aggregate(total=Sum('subtotal'))['total']

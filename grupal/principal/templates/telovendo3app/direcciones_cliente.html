@@ -1,0 +1,17 @@
+{% extends 'telovendo3app/base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>Seleccionar Dirección de Envío</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {% for direccion in direcciones %}
+      <div>
+        <input type="radio" name="direccion_id" value="{{ direccion.id }}">
+        <label>{{ direccion.direccion }}</label>
+      </div>
+    {% endfor %}
+    <button type="submit">Seleccionar dirección</button>
+  </form>
+{% endblock %}

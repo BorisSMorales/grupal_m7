@@ -77,8 +77,14 @@ section .titulo{
 }
 
 footer {
-    margin-top: 50px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    position: absolute;
     bottom: 0;
+    width: 100%;
+    margin-top: 50px;
     -webkit-box-shadow: 0 -10px 5px 0 #FF0000;
     box-shadow: 0 -10px 5px 0 #FF0000;
 }

@@ -207,13 +207,16 @@ footer {
         top: 100%;
         right: -100%;
         width: 270px;
-        height: 23vh;
+        height: fit-content;
         background: var(--main-color);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         border-radius: 10px;
         transition: all .50s ease;
+    }
+    .main a{
+        font-size: 0;
     }
     .nav-bar a{
         display: block;

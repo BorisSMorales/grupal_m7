@@ -91,7 +91,7 @@ class AgregarProductoForm(forms.Form):
     cantidad = forms.IntegerField(min_value=1, max_value=10)
 
 # class AgregarProductoForm(forms.Form):
-#     producto = forms.ModelChoiceField(queryset=Producto.objects.all())
+#     producto = forms.ModelChoic|eField(queryset=Producto.objects.all())
 #     cantidad = forms.IntegerField()
 
 #     def __init__(self, *args, **kwargs):

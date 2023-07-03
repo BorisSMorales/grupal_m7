@@ -14,7 +14,7 @@ from django.db.models import Sum
 from django.views import View
 from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm, AgregarProductoForm
 from .forms import ProductoForm
-from .models import Cliente
+from .models import Cliente,  Pedido, DetallePedido
 
 
 # Create your views here.
@@ -250,35 +250,36 @@ class RegistroView(TemplateView):
 
 #         return redirect('agregar_producto_pedido')
 
-class AgregarProductoPedidoView(LoginRequiredMixin, TemplateView):
+class AgregarProductoPedidoView(View):
     template_name = 'telovendo3app/pedido_cliente.html'
-    form_class = AgregarPedidoForm
+    form_class = AgregarProductoForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        productos = Producto.objects.filter(disponibilidad__gt=0)
-        productos_with_range = []
-        for producto in productos:
-            producto.disponibilidad_range = range(1, producto.disponibilidad + 1)
-            productos_with_range.append(producto)
-        context['productos'] = productos_with_range
-        context['form'] = self.form_class()
-        return context
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            cliente = Cliente.objects.get(user=request.user)
-            producto_id = form.cleaned_data['producto']
+            producto = form.cleaned_data['producto']
             cantidad = form.cleaned_data['cantidad']
 
-            producto = Producto.objects.get(id=producto_id)
-            if cantidad <= producto.disponibilidad:
-                pedido = Pedido.objects.create(cliente=cliente, estado='pendiente')
-                detalle = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=producto.precio, subtotal=producto.precio * cantidad)
-                detalle.save()  # Guardar el objeto detalle en la base de datos
+            # Crea el pedido y establece los campos necesarios
+            pedido = Pedido.objects.create(cliente=request.user.cliente, total=0)
 
-        return redirect('agregar_producto_pedido')
+            # Crea el detalle del pedido y establece los campos necesarios
+            detalle_pedido = DetallePedido.objects.create(pedido=pedido, producto=producto, cantidad=cantidad,
+                                                        precio_unitario=producto.precio,
+                                                          subtotal=producto.precio * cantidad)
+
+            # Actualiza el total del pedido
+            pedido.total += detalle_pedido.subtotal
+            pedido.save()
+
+            # Redireccionar a la vista DetallesPedidoView
+            return redirect('detalles_pedido', pedido_id=pedido.id)
+
+        return render(request, self.template_name, {'form': form})
 
 
 
@@ -291,7 +292,7 @@ class DetallesPedidoView(View):
             'pedido': pedido,
             'detalles': detalles
         }
-        return render(request, 'telovendo3app/detalles_pedido.html', context)
+        return render(request, 'telovendo3app/detalle_pedido.html', context)
 
 
 

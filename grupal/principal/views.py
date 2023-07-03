@@ -256,7 +256,10 @@ class AgregarProductoPedidoView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, self.template_name, {'form': form})
+        # Obtener las direcciones del cliente
+        direcciones = DireccionCliente.objects.filter(cliente=request.user.cliente)
+        
+        return render(request, self.template_name, {'form': form, 'direcciones': direcciones})
     
     
 

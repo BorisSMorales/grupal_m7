@@ -7,9 +7,16 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Agregar producto al pedido</button>
+    {% for direccion in direcciones %}
+        <input type="radio" name="direccion_id" value="{{ direccion.id }}">
+        <label>{{ direccion.direccion }}</label>
+      {% endfor %}
+      <button type="submit">Agregar producto al pedido</button>
+
   </form>
+
   {% comment %} <a href="{% url 'detalles_pedido' pedido.id %}">Ver detalles del pedido</a> {% endcomment %}
-  <a href="{% url 'agregar_direccion_cliente' %}">agregar dirección de envío</a>
+  <a href="{% url 'agregar_direccion_cliente' %}">Agregar dirección de envío</a>
+
 {% endblock %}
 

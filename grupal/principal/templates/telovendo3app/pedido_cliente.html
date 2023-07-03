@@ -1,0 +1,40 @@
+{% extends 'telovendo3app/base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>Lista de Productos</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+        <td>{{ producto.nombre }}</td>
+        <td>
+          <select name="cantidad" id="id_cantidad">
+            {% for cantidad in cantidades %}
+            <option value="{{ cantidad }}">{{ cantidad }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <form action="{% url 'agregar_producto_pedido' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="producto" value="{{ producto.id }}">
+            <input type="submit" value="Agregar a pedido">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+{% endblock %}
+
+

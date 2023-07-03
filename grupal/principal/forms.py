@@ -84,3 +84,17 @@ class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = ['nombre', 'categoria', 'precio', 'disponibilidad', 'descripcion']
+
+
+class AgregarProductoForm(forms.Form):
+    producto = forms.ModelChoiceField(queryset=Producto.objects.filter(disponibilidad__gt=0))
+    cantidad = forms.IntegerField(min_value=1, max_value=10)
+
+# class AgregarProductoForm(forms.Form):
+#     producto = forms.ModelChoiceField(queryset=Producto.objects.all())
+#     cantidad = forms.IntegerField()
+
+#     def __init__(self, *args, **kwargs):
+#         cantidades_disponibles = kwargs.pop('cantidades_disponibles')
+#         super().__init__(*args, **kwargs)
+#         self.fields['cantidad'].widget = forms.Select(choices=[(cantidad, cantidad) for cantidad in cantidades_disponibles])

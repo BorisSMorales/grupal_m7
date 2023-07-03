@@ -224,31 +224,35 @@ class RegistroView(TemplateView):
 
         return render(request, self.template_name, {'form': form})
     
+
 # class AgregarProductoPedidoView(LoginRequiredMixin, TemplateView):
 #     template_name = 'telovendo3app/pedido_cliente.html'
 
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
-#         context['form'] = AgregarProductoForm()
-#         context['productos'] = Producto.objects.filter(disponibilidad__gt=0)
-#         context['cantidades'] = range(1, 11)  # Puedes ajustar el rango según tus necesidades
+#         productos = Producto.objects.filter(disponibilidad__gt=0)
+#         productos_with_range = []
+#         for producto in productos:
+#             producto.disponibilidad_range = range(1, producto.disponibilidad + 1)
+#             productos_with_range.append(producto)
+#         context['productos'] = productos_with_range
 #         return context
 
 #     def post(self, request, *args, **kwargs):
 #         pedido, created = Pedido.objects.get_or_create(cliente=request.user, estado='pendiente')
-#         form = AgregarProductoForm(request.POST)
-#         if form.is_valid():
-#             producto_id = form.cleaned_data['producto']
-#             cantidad = form.cleaned_data['cantidad']
-            
-#             producto = Producto.objects.get(id=producto_id)
+#         producto_id = request.POST.get('producto')
+#         cantidad = int(request.POST.get('cantidad'))
+
+#         producto = Producto.objects.get(id=producto_id)
+#         if cantidad <= producto.disponibilidad:
 #             detalle = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=producto.precio, subtotal=producto.precio * cantidad)
 #             detalle.save()
-            
+
 #         return redirect('agregar_producto_pedido')
 
 class AgregarProductoPedidoView(LoginRequiredMixin, TemplateView):
     template_name = 'telovendo3app/pedido_cliente.html'
+    form_class = AgregarPedidoForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -258,19 +262,36 @@ class AgregarProductoPedidoView(LoginRequiredMixin, TemplateView):
             producto.disponibilidad_range = range(1, producto.disponibilidad + 1)
             productos_with_range.append(producto)
         context['productos'] = productos_with_range
+        context['form'] = self.form_class()
         return context
 
     def post(self, request, *args, **kwargs):
-        pedido, created = Pedido.objects.get_or_create(cliente=request.user, estado='pendiente')
-        producto_id = request.POST.get('producto')
-        cantidad = int(request.POST.get('cantidad'))
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cliente = Cliente.objects.get(user=request.user)
+            producto_id = form.cleaned_data['producto']
+            cantidad = form.cleaned_data['cantidad']
 
-        producto = Producto.objects.get(id=producto_id)
-        if cantidad <= producto.disponibilidad:
-            detalle = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=producto.precio, subtotal=producto.precio * cantidad)
-            detalle.save()
+            producto = Producto.objects.get(id=producto_id)
+            if cantidad <= producto.disponibilidad:
+                pedido = Pedido.objects.create(cliente=cliente, estado='pendiente')
+                detalle = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=producto.precio, subtotal=producto.precio * cantidad)
+                detalle.save()  # Guardar el objeto detalle en la base de datos
 
         return redirect('agregar_producto_pedido')
+
+
+
+    
+class DetallesPedidoView(View):
+    def get(self, request, pedido_id):
+        pedido = Pedido.objects.get(id=pedido_id)
+        detalles = DetallePedido.objects.filter(pedido=pedido)
+        context = {
+            'pedido': pedido,
+            'detalles': detalles
+        }
+        return render(request, 'telovendo3app/detalles_pedido.html', context)
 
 
 

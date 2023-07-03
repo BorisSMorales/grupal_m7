@@ -18,7 +18,7 @@
         <td>{{ producto.nombre }}</td>
         <td>
           <select name="cantidad" id="id_cantidad">
-            {% for cantidad in cantidades %}
+            {% for cantidad in producto.disponibilidad_range %}
             <option value="{{ cantidad }}">{{ cantidad }}</option>
             {% endfor %}
           </select>
@@ -36,5 +36,4 @@
   </table>
   
 {% endblock %}
-
 

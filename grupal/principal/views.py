@@ -264,29 +264,29 @@ class AgregarProductoPedidoView(View):
             producto = form.cleaned_data['producto']
             cantidad = form.cleaned_data['cantidad']
 
-            # Crea el pedido y establece los campos necesarios
-            pedido = Pedido.objects.create(cliente=request.user.cliente, total=0)
+            pedido_id = request.session.get('pedido_id')
+            if pedido_id:
+                pedido = get_object_or_404(Pedido, id=pedido_id)
+            else:
+                cliente = request.user.cliente
+                pedido = Pedido.objects.create(cliente=cliente,estado='Pendiente', total=0)
+                request.session['pedido_id'] = pedido.id
 
-            # Crea el detalle del pedido y establece los campos necesarios
             detalle_pedido = DetallePedido.objects.create(pedido=pedido, producto=producto, cantidad=cantidad,
-                                                        precio_unitario=producto.precio,
+                                                          precio_unitario=producto.precio,
                                                           subtotal=producto.precio * cantidad)
 
-            # Actualiza el total del pedido
             pedido.total += detalle_pedido.subtotal
             pedido.save()
 
-            # Redireccionar a la vista DetallesPedidoView
             return redirect('detalles_pedido', pedido_id=pedido.id)
 
         return render(request, self.template_name, {'form': form})
 
 
-
-    
 class DetallesPedidoView(View):
     def get(self, request, pedido_id):
-        pedido = Pedido.objects.get(id=pedido_id)
+        pedido = get_object_or_404(Pedido, id=pedido_id)
         detalles = DetallePedido.objects.filter(pedido=pedido)
         context = {
             'pedido': pedido,

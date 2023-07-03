@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Cliente, Producto,Pedido
+from .models import Cliente, Producto,Pedido,DireccionCliente
 
 class FormularioContacto(forms.Form):
     nombre = forms.CharField(label="Nombre", max_length=50, required=True,
@@ -98,3 +98,8 @@ class AgregarProductoForm(forms.Form):
 #         cantidades_disponibles = kwargs.pop('cantidades_disponibles')
 #         super().__init__(*args, **kwargs)
 #         self.fields['cantidad'].widget = forms.Select(choices=[(cantidad, cantidad) for cantidad in cantidades_disponibles])
+
+class DireccionClienteForm(forms.ModelForm):
+    class Meta:
+        model = DireccionCliente
+        fields = ['direccion']

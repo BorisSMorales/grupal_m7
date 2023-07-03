@@ -12,9 +12,9 @@ from .models import DetallePedido, Pedido,Producto
 from django.views.generic import ListView
 from django.db.models import Sum
 from django.views import View
-from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm, AgregarProductoForm
+from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm, AgregarProductoForm,DireccionClienteForm
 from .forms import ProductoForm
-from .models import Cliente,  Pedido, DetallePedido
+from .models import Cliente,  Pedido, DetallePedido,DireccionCliente
 
 
 # Create your views here.
@@ -257,6 +257,8 @@ class AgregarProductoPedidoView(View):
     def get(self, request, *args, **kwargs):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
+    
+    
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -288,13 +290,43 @@ class DetallesPedidoView(View):
     def get(self, request, pedido_id):
         pedido = get_object_or_404(Pedido, id=pedido_id)
         detalles = DetallePedido.objects.filter(pedido=pedido)
+        direccion_envio = request.session.get('direccion_envio')
         context = {
             'pedido': pedido,
-            'detalles': detalles
+            'detalles': detalles,
+            'direccion_envio': direccion_envio,
         }
         return render(request, 'telovendo3app/detalle_pedido.html', context)
+    
+class DireccionClienteView(View):
+    template_name = 'telovendo3app/agregar_direccion.html'
+    form_class = DireccionClienteForm
 
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            direccion = form.cleaned_data['direccion']
+            cliente = request.user.cliente
+            DireccionCliente.objects.create(cliente=cliente, direccion=direccion)
+            return redirect('agregar_producto_pedido')
 
+        return render(request, self.template_name, {'form': form})
 
+class SeleccionarDireccionView(View):
+    template_name = 'telovendo3app/direcciones_cliente.html'
 
+    def get(self, request, *args, **kwargs):
+        cliente = request.user.cliente
+        direcciones = DireccionCliente.objects.filter(cliente=cliente)
+        return render(request, self.template_name, {'direcciones': direcciones})
+
+    def post(self, request, *args, **kwargs):
+        direccion_id = request.POST.get('direccion_id')
+        if direccion_id:
+            direccion = get_object_or_404(DireccionCliente, id=direccion_id)
+            request.session['direccion_envio'] = direccion.direccion
+        return redirect('agregar_producto_pedido')

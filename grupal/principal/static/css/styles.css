@@ -37,7 +37,12 @@ nav {
 
 section{
     text-align: left;
-    padding-top: 80px;
+
+}
+
+section .login{
+    padding-top: 40px;
+
 }
 
 section label {
@@ -60,6 +65,11 @@ section .table{
 section select{
     width: 315px;
 } 
+
+section .py-5 .py-lg-5{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
 
 section .card{
     align-items: center;
@@ -85,7 +95,6 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-top: 50px;
     -webkit-box-shadow: 0 -10px 5px 0 #FF0000;
     box-shadow: 0 -10px 5px 0 #FF0000;
 }
@@ -118,7 +127,7 @@ footer {
     color: var(--text-color);
     font-size: 1.1rem;
     font-weight: 500;
-    padding: 5px 0;
+    
     margin: 0px 30px;
     transition: all .50s ease;
     text-decoration: none !important;

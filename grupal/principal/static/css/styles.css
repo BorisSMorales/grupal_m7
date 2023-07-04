@@ -57,6 +57,12 @@ section .label-registro{
     width: 200px;
 }
 
+section .cantidad{
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 5px;
+}
+
 section .table{
     border-radius: 25px;
 }
@@ -72,7 +78,7 @@ section .py-5 .py-lg-5{
 
 section .card{
     align-items: center;
-    padding: 5px;
+    padding: 15px;
     background: var(--bg-color);
     color: var(--text-color);
     border-color: #e60404;

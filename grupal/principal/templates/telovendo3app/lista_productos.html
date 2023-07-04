@@ -3,19 +3,19 @@
 
 {% block content %}
 
-<h2 class="text-center mt-5">Lista de productos 💞</h2>
+<h2 class="text-center mt-5">Lista de productos 💞</h2><br>
 
 
 <section>
     <div class="container">
-        {% for producto in productos %}
         <div class="row row-cols-1 row-cols-md-3 g-4" id=" productos">
-            <div class="col">
-                <div class="card">
+            {% for producto in productos %}
+            <div class="col ">
+                <div class="card h-100">
                     <div>
                         <img class="productos" src="#" alt="...">
                     </div>
-                    <h2>{{ producto.nombre }}</h2>
+                    <h4 class="pb-2 mb-4 text-danger border-bottom border-danger">{{ producto.nombre }}</h4>
                         <ul>
                             <li>ID Producto: {{ producto.id }}</li>
                             <li>Catergoría: {{ producto.categoria }}</li>
@@ -23,18 +23,17 @@
                             <li>Stock: {{ producto.disponibilidad }}</li>
                             <li>Drescripción: {{ producto.descripcion }}</li>
                         </ul>
-                    <div>
+                    <div class="cantidad">
                         <label >Cantidad:</label>
                         <input style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
-                        <a class="btn-aumentar btn btn-danger btn-sm" type="a" id="sumar-prod-001">+</a>
-                        <a class="btn-dismiur btn btn-danger btn-sm" type="a" id="restar-prod-001">-</a>
+                        <a class="btn btn-danger btn-sm" type="a">Agregar</a>
                     </div>
-                </div>
-            </div>    
-        </div><br>
-        {% empty %}
+                </div><br>
+            </div>
+            {% empty %}
             <p>No hay productos disponibles.</p>
-        {% endfor %}
+            {% endfor %}   
+        </div><br>
     </div>
 </Section>
 {% if user.is_staff %}

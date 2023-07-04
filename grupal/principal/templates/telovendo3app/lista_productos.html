@@ -3,15 +3,47 @@
 
 {% block content %}
 
-<h1 class="text-center mt-5">Lista de productos</h1>
+<h2 class="text-center mt-5">Lista de productos 💞</h2>
 
+
+<section>
+    <div class="container">
+        {% for producto in productos %}
+        <div class="row row-cols-1 row-cols-md-3 g-4" id=" productos">
+            <div class="col">
+                <div class="card">
+                    <div>
+                        <img class="productos" src="#" alt="...">
+                    </div>
+                    <h2>{{ producto.nombre }}</h2>
+                        <ul>
+                            <li>ID Producto: {{ producto.id }}</li>
+                            <li>Catergoría: {{ producto.categoria }}</li>
+                            <li>Precio: {{ producto.precio }}</li>
+                            <li>Stock: {{ producto.disponibilidad }}</li>
+                            <li>Drescripción: {{ producto.descripcion }}</li>
+                        </ul>
+                    <div>
+                        <label >Cantidad:</label>
+                        <input style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
+                        <a class="btn-aumentar btn btn-danger btn-sm" type="a" id="sumar-prod-001">+</a>
+                        <a class="btn-dismiur btn btn-danger btn-sm" type="a" id="restar-prod-001">-</a>
+                    </div>
+                </div>
+            </div>    
+        </div><br>
+        {% empty %}
+            <p>No hay productos disponibles.</p>
+        {% endfor %}
+    </div>
+</Section>
+{% if user.is_staff %}
 <section>
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12 col-md-8 col-lg-6 login" style="width: max-content;">
                 <div class="">
-                    <table class="table table-dark table-bordered border-danger border border-5
-                    ">
+                    <table class="table table-dark table-bordered border-danger border border-5">
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>
@@ -21,22 +53,28 @@
                             </tr>
                         </thead>
                         <tbody>
-        {% for producto in productos %}
-        <tr>
-            <td scope="row">{{ producto.id }}</td>
-            <td>{{ producto.nombre }}</td>
-            <td>{{ producto.precio }}</td>
-            <td>
-                <a class="btn btn-sm btn-danger" href="{% url 'eliminar_producto' producto.id %}">Eliminar</a> 
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3">No hay productos disponibles.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<a class="btn btn-sm btn-danger" href="{% url 'crear_producto' %}">Crear nuevo producto</a>
+                            {% for producto in productos %}
+                            <tr>
+                                <td scope="row">{{ producto.id }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.precio }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" href="{% url 'eliminar_producto' producto.id %}">Eliminar</a> 
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3">No hay productos disponibles.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-sm btn-danger" href="{% url 'crear_producto' %}">Crear nuevo producto</a>
+</section>                        
+{% endif %}  
+</section><br><br><br><br>
 {% endblock %}

@@ -81,9 +81,9 @@ section .card{
     padding: 15px;
     background: var(--bg-color);
     color: var(--text-color);
-    border-color: #e60404;
-    -webkit-box-shadow: 2px 2px 5px 2px #FF0000;
-    box-shadow: 2px 2px 5px 2px #FF0000;
+    border-color: var(--bg-color);
+    -webkit-box-shadow: 10px 10px 10px -5px var(--main-color);
+    box-shadow: 10px 10px 10px -5px var(--main-color);
     padding-top: 15px;
     padding-bottom: 15px;
     
@@ -133,7 +133,6 @@ footer {
     color: var(--text-color);
     font-size: 1.1rem;
     font-weight: 500;
-    
     margin: 0px 30px;
     transition: all .50s ease;
     text-decoration: none !important;

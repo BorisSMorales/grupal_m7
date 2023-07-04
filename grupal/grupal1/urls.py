@@ -14,12 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from principal.views import home, Ingreso, AgregarPedidoView, EliminarPedidoView, ListaPedidosView, ActualizarEstadoPedidoView, ListaProductosView, EliminarProductoView, CrearProductoView,RegistroView,AgregarProductoPedidoView,DetallesPedidoView,DireccionClienteView,SeleccionarDireccionView
+from principal.views import CrearPedidoView
+from principal.views import home, Ingreso, AgregarPedidoView, EliminarPedidoView, ListaPedidosView, ActualizarEstadoPedidoView, ListaProductosView, EliminarProductoView, CrearProductoView,RegistroView,AgregarProductoPedidoView,DetallesPedidoView,DireccionClienteView,SeleccionarDireccionView,CrearPedidoView
 
 
 urlpatterns = [
@@ -39,7 +38,6 @@ urlpatterns = [
     path('pedido/<int:pedido_id>/', DetallesPedidoView.as_view(), name='detalles_pedido'),
     path('agregar_direccion/',DireccionClienteView.as_view(), name='agregar_direccion_cliente'),
     path('direccion_cliente/',SeleccionarDireccionView.as_view(), name='direccion_cliente'),
+    # path('pedido_test/', CrearPedidoView.as_view(), name='crear_pedido_test'),
+    path('pedido/nuevo/', CrearPedidoView.as_view(), name='crear_pedido'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

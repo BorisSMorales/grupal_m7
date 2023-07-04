@@ -10,7 +10,7 @@
                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                     <div class="card-body">
                         <h3 class="card-title">Agregar Producto</h3><br>
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
                         

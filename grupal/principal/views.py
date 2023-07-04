@@ -150,11 +150,13 @@ class CrearProductoView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = ProductoForm(request.POST)
+        form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
+            print("El formulario es válido")
             form.save()
             return redirect('lista_productos')
         else:
+            print("El formulario no es válido")
             context = self.get_context_data(form=form)
             return self.render_to_response(context)
 
@@ -210,7 +212,8 @@ class RegistroView(TemplateView):
                 username=form.cleaned_data['username'],
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
-                email=form.cleaned_data['email']
+                email=form.cleaned_data['email'],
+                telefono=form.cleaned_data['telefono']
             )
             cliente.set_password(form.cleaned_data['password1'])
             cliente.save()

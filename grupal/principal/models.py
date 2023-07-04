@@ -22,7 +22,7 @@ class Cliente(User):
         self.telefono = self.telefono
         self.nombre = self.username  # Asignar el valor de username a nombre
         self.correo_electronico = self.email  # Asignar el valor de email a correo_electronico
-        super().save(args, **kwargs)  # Llamar al método save() de la clase padre
+        super().save(*args, **kwargs)  # Llamar al método save() de la clase padre
 
     def str(self):
         return self.username
@@ -53,6 +53,7 @@ class Producto(models.Model):
     precio = models.IntegerField(null=False,blank=False)
     disponibilidad = models.IntegerField(null=False,blank=False)
     descripcion = models.CharField(max_length=200,null=True,blank=True)
+    imagen = models.ImageField(upload_to='imagen_productos', null=True)
 
     def __str__(self):
         return self.nombre

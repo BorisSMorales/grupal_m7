@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,10 +78,10 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'awake2023_grupo4', 
-        'USER': 'grupo4',
-        'PASSWORD': 'adalid.2023',
-        'HOST': '45.173.130.120', 
+        'NAME': 'bacup', 
+        'USER': 'grupal_m7',
+        'PASSWORD': '123',
+        'HOST': 'localhost', 
         'PORT': '5432',
     }
     # 'default': {
@@ -130,6 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

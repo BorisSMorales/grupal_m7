@@ -8,17 +8,13 @@
 
 <section>
     <div class="container">
-            <a class="btn btn-sm btn-danger" href="{% url 'crear_pedido' %}">Crear nuevo pedido</a>
-        <!-- <div style="float: right;">
-            
-            {% include "telovendo3app/carro/widget.html" %}
-        </div>     -->
+         <a class="btn btn-sm btn-danger" href="{% url 'crear_pedido' %}">Crear nuevo pedido</a>
         <div class="row row-cols-1 row-cols-md-3 g-4" id="productos">
             {% for producto in productos %}
             <div class="col">
                 <div class="card h-100">
                     <div>
-                        <img class="productos" src="#" alt="...">
+                        <img class="productos" src="{{ producto.imagen.url }}" alt="...">
                     </div>
                     <h4 class="pb-2 mb-4 text-danger border-bottom border-danger">{{ producto.nombre }}</h4>
                         <ul>
@@ -28,8 +24,10 @@
                             <li>Stock: {{ producto.disponibilidad }}</li>
                             <li>Descripción: {{ producto.descripcion }}</li>
                         </ul>
-                    <div class="card-footer text-center">
-                        <a href="{% url 'carro:agregar' producto.id %}" class="btn btn-danger btn-sm" >Agregar al carro</a>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input class="border-danger" style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
+                        <a class="btn btn-danger btn-sm" type="a">Agregar</a>
                     </div>
                 </div><br>
             </div>
@@ -37,6 +35,7 @@
             <p>No hay productos disponibles.</p>
             {% endfor %}
         </div><br>
+       
     </div>
 </section>
 

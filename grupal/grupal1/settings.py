@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'principal',
-    'carro'
+    'principal'
 ]
 
 MIDDLEWARE = [
@@ -65,7 +64,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'carro.context_processor.importe_total_carro',
             ],
         },
     },
@@ -78,22 +76,22 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bacup3', 
-        'USER': 'grupal_m7',
-        'PASSWORD': '123',
-        'HOST': 'localhost', 
-        'PORT': '5432',
-    }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'db_test_4',
-    #     'USER': 'usuariotest',
+    #     'NAME': 'bacup', 
+    #     'USER': 'grupal_m7',
     #     'PASSWORD': '123',
-    #     'HOST': 'localhost',
+    #     'HOST': 'localhost', 
     #     'PORT': '5432',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'db_test_4',
+        'USER': 'usuariotest',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 
 }
 

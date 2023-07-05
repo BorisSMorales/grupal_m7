@@ -1,0 +1,24 @@
+{% extends 'telovendo3app/base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>Crear Nuevo Pedido</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <label for="direccion_cliente">Dirección de envío:</label>
+      <div>
+        <label for="nueva_direccion">Nueva dirección:</label>
+        <input type="text" id="nueva_direccion" name="nueva_direccion">
+      </div>
+      <select id="direccion_cliente" name="direccion_cliente">
+        <option value="">Seleccionar dirección existente</option>
+        {% for direccion in direcciones %}
+        <option value="{{ direccion.id }}">{{ direccion.direccion }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    
+    <button type="submit">Crear pedido</button>
+  </form>
+{% endblock %}

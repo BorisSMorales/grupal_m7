@@ -1,5 +1,5 @@
 {% extends 'telovendo3app/base.html' %}
-{%load static%}
+{% load static %}
 
 {% block content %}
 
@@ -8,9 +8,10 @@
 
 <section>
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 g-4" id=" productos">
+         <a class="btn btn-sm btn-danger" href="{% url 'crear_pedido' %}">Crear nuevo pedido</a>
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="productos">
             {% for producto in productos %}
-            <div class="col ">
+            <div class="col">
                 <div class="card h-100">
                     <div>
                         <img class="productos" src="{{ producto.imagen.url }}" alt="...">
@@ -18,24 +19,28 @@
                     <h4 class="pb-2 mb-4 text-danger border-bottom border-danger">{{ producto.nombre }}</h4>
                         <ul>
                             <li>ID Producto: {{ producto.id }}</li>
-                            <li>Catergoría: {{ producto.categoria }}</li>
+                            <li>Categoría: {{ producto.categoria }}</li>
                             <li>Precio: {{ producto.precio }}</li>
                             <li>Stock: {{ producto.disponibilidad }}</li>
-                            <li>Drescripción: {{ producto.descripcion }}</li>
+                            <li>Descripción: {{ producto.descripcion }}</li>
                         </ul>
                     <div class="cantidad">
-                        <label >Cantidad:</label>
-                        <input class="border-danger " style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
+                        <label>Cantidad:</label>
+                        <input class="border-danger" style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
                         <a class="btn btn-danger btn-sm" type="a">Agregar</a>
                     </div>
                 </div><br>
             </div>
             {% empty %}
             <p>No hay productos disponibles.</p>
-            {% endfor %}   
+            {% endfor %}
         </div><br>
+       
     </div>
-</Section>
+</section>
+
+
+
 {% if user.is_staff %}
 <section>
     <div class="container">
@@ -58,7 +63,7 @@
                                 <td>{{ producto.nombre }}</td>
                                 <td>{{ producto.precio }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-danger" href="{% url 'eliminar_producto' producto.id %}">Eliminar</a> 
+                                    <a class="btn btn-sm btn-danger" href="{% url 'eliminar_producto' producto.id %}">Eliminar</a>
                                 </td>
                             </tr>
                             {% empty %}
@@ -69,12 +74,11 @@
                         </tbody>
                     </table>
                     <a class="btn btn-sm btn-danger" href="{% url 'crear_producto' %}">Crear nuevo producto</a>
-
                 </div>
             </div>
         </div>
     </div>
-</section>                        
-{% endif %}  
+</section>
+{% endif %}
 </section><br><br><br><br>
 {% endblock %}

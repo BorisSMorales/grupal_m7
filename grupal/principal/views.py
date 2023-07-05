@@ -320,18 +320,42 @@ class AgregarProductoPedidoView(View):
         return render(request, self.template_name, {'form': form})
 
 
+# class DetallesPedidoView(View):
+#     def get(self, request, pedido_id):
+#         pedido = get_object_or_404(Pedido, id=pedido_id)
+#         detalles = DetallePedido.objects.filter(pedido=pedido)
+#         direccion_envio = pedido.direccion_cliente.direccion  # Acceder a la dirección de envío
+        
+#         context = {
+#             'pedido': pedido,
+#             'detalles': detalles,
+#             'direccion_envio': direccion_envio,
+#         }
+#         return render(request, 'telovendo3app/detalle_pedido.html', context)
 class DetallesPedidoView(View):
     def get(self, request, pedido_id):
         pedido = get_object_or_404(Pedido, id=pedido_id)
         detalles = DetallePedido.objects.filter(pedido=pedido)
-        direccion_envio = pedido.direccion_cliente.direccion  # Acceder a la dirección de envío
-        
         context = {
             'pedido': pedido,
             'detalles': detalles,
-            'direccion_envio': direccion_envio,
         }
-        return render(request, 'telovendo3app/detalle_pedido.html', context)
+        return render(request,'telovendo3app/detalle_pedido.html', context)
+
+    def post(self, request, pedido_id):
+        pedido = get_object_or_404(Pedido, id=pedido_id)
+        detalles = DetallePedido.objects.filter(pedido=pedido)
+        total = request.POST.get('total')  # Obtener el nuevo total del pedido del formulario
+
+        # Actualizar el total del pedido
+        pedido.total = total
+        pedido.save()
+
+        context = {
+            'pedido': pedido,
+            'detalles': detalles,
+        }
+        return render(request, 'telovendo3app/lista_productos.html', context) #funcionando!!
 
 
 class SeleccionarDireccionView(View):

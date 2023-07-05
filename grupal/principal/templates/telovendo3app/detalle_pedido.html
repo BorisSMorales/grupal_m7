@@ -31,4 +31,11 @@
   <a href="{% url 'lista_productos' %}">Volver a agregar productos</a>
 
   <p>Dirección de envío: {{ direccion_envio }}</p>
+
+  <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
+    {% csrf_token %}
+    <input type="text" name="total" value="{{ pedido.total }}">
+    <button type="submit">Guardar</button>
+  </form>
+  
 {% endblock %}

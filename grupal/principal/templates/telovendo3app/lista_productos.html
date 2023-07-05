@@ -5,10 +5,8 @@
 
 <h2 class="text-center mt-5">Lista de productos 💞</h2><br>
 
-
 <section>
     <div class="container">
-         <a class="btn btn-sm btn-danger" href="{% url 'crear_pedido' %}">Crear nuevo pedido</a>
         <div class="row row-cols-1 row-cols-md-3 g-4" id="productos">
             {% for producto in productos %}
             <div class="col">
@@ -17,17 +15,23 @@
                         <img class="productos" src="{{ producto.imagen.url }}" alt="...">
                     </div>
                     <h4 class="pb-2 mb-4 text-danger border-bottom border-danger">{{ producto.nombre }}</h4>
-                        <ul>
-                            <li>ID Producto: {{ producto.id }}</li>
-                            <li>Categoría: {{ producto.categoria }}</li>
-                            <li>Precio: {{ producto.precio }}</li>
-                            <li>Stock: {{ producto.disponibilidad }}</li>
-                            <li>Descripción: {{ producto.descripcion }}</li>
-                        </ul>
+                    <ul>
+                        <li>ID Producto: {{ producto.id }}</li>
+                        <li>Categoría: {{ producto.categoria }}</li>
+                        <li>Precio: {{ producto.precio }}</li>
+                        <li>Stock: {{ producto.disponibilidad }}</li>
+                        <li>Descripción: {{ producto.descripcion }}</li>
+                    </ul>
                     <div class="cantidad">
                         <label>Cantidad:</label>
-                        <input class="border-danger" style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
-                        <a class="btn btn-danger btn-sm" type="a">Agregar</a>
+                        <form method="post" action="{% url 'agregar_producto_pedido' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto" value="{{ producto.id }}">
+                            <div class="form-group">
+                                <input type="number" name="cantidad" class="form-control" min="1" value="1">
+                            </div>
+                            <button class="btn btn-sm btn-danger" type="submit">Agregar al Pedido</button>
+                        </form>
                     </div>
                 </div><br>
             </div>
@@ -35,50 +39,11 @@
             <p>No hay productos disponibles.</p>
             {% endfor %}
         </div><br>
-       
     </div>
 </section>
-
-
 
 {% if user.is_staff %}
-<section>
-    <div class="container">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-12 col-md-8 col-lg-6 login" style="width: max-content;">
-                <div class="">
-                    <table class="table table-dark table-bordered border-danger border border-5">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for producto in productos %}
-                            <tr>
-                                <td scope="row">{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.precio }}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-danger" href="{% url 'eliminar_producto' producto.id %}">Eliminar</a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="3">No hay productos disponibles.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <a class="btn btn-sm btn-danger" href="{% url 'crear_producto' %}">Crear nuevo producto</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 {% endif %}
-</section><br><br><br><br>
+
+<br><br><br><br>
 {% endblock %}

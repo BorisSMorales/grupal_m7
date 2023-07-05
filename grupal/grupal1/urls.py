@@ -39,5 +39,5 @@ urlpatterns = [
     path('agregar_direccion/',DireccionClienteView.as_view(), name='agregar_direccion_cliente'),
     path('direccion_cliente/',SeleccionarDireccionView.as_view(), name='direccion_cliente'),
     # path('pedido_test/', CrearPedidoView.as_view(), name='crear_pedido_test'),
-    path('pedido/nuevo/', CrearPedidoView.as_view(), name='crear_pedido'),
+    path('crear_pedido/', CrearPedidoView.as_view(), name='crear_pedido')
 ]

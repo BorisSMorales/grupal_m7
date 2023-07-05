@@ -132,13 +132,41 @@ class ActualizarEstadoPedidoView(View):
             return redirect('lista_pedidos')
         
 
+# class ListaProductosView(TemplateView):
+#     template_name = 'telovendo3app/lista_productos.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['productos'] = Producto.objects.all()
+#         return context
 class ListaProductosView(TemplateView):
     template_name = 'telovendo3app/lista_productos.html'
+    form_class = AgregarProductoForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['productos'] = Producto.objects.all()
+        # Obtener los productos disponibles
+        productos = Producto.objects.all()
+        context['productos'] = productos
         return context
+
+    def post(self, request, *args, **kwargs):
+        for producto in Producto.objects.all():
+            form = self.form_class(request.POST, prefix=f'producto_{producto.id}')
+            if form.is_valid():
+                cantidad = form.cleaned_data['cantidad']
+
+                # Obtener o crear el detalle del pedido
+                pedido_id = request.session.get('pedido_id')
+                if pedido_id:
+                    pedido = Pedido.objects.get(id=pedido_id)
+                else:
+                    pedido = Pedido.objects.create(cliente=request.user, total=0, estado='Pendiente')
+
+                # Asociar el producto al detalle del pedido
+                DetallePedido.objects.create(pedido=pedido, producto=producto, cantidad=cantidad)
+
+        return redirect('lista_productos')
 
 
 class CrearProductoView(TemplateView):
@@ -304,23 +332,6 @@ class DetallesPedidoView(View):
         }
         return render(request, 'telovendo3app/detalle_pedido.html', context)
     
-class DireccionClienteView(View):
-    template_name = 'telovendo3app/agregar_direccion.html'
-    form_class = DireccionClienteForm
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            direccion = form.cleaned_data['direccion']
-            cliente = request.user.cliente
-            DireccionCliente.objects.create(cliente=cliente, direccion=direccion)
-            return redirect('agregar_producto_pedido')
-
-        return render(request, self.template_name, {'form': form})
 
 class SeleccionarDireccionView(View):
     template_name = 'telovendo3app/direcciones_cliente.html'
@@ -351,7 +362,7 @@ class DireccionClienteView(View):
             direccion = form.cleaned_data['direccion']
             cliente = request.user.cliente
             DireccionCliente.objects.create(cliente=cliente, direccion=direccion)
-            return redirect('agregar_producto_pedido')
+            return redirect('lista_productos')
 
         return render(request, self.template_name, {'form': form})
 
@@ -369,14 +380,14 @@ class CrearPedidoView(TemplateView):
     def post(self, request, *args, **kwargs):
         # Obtener la dirección seleccionada
         direccion_id = request.POST.get('direccion_cliente')
-        
+
         if direccion_id:
             direccion = DireccionCliente.objects.get(id=direccion_id)
         else:
             # Crear una nueva dirección si no se selecciona ninguna existente
             direccion = DireccionCliente.objects.create(
                 cliente=Cliente.objects.get(username=request.user.username),
-                direccion=('direccion')
+                direccion='direccion'  # Reemplaza 'direccion' con el valor deseado
             )
 
         # Crear el pedido
@@ -387,6 +398,10 @@ class CrearPedidoView(TemplateView):
             estado='Pendiente'  # Agrega el estado correcto para el pedido
         )
 
+        # Establecer la sesión del pedido del cliente
+        request.session['pedido_id'] = pedido.id #ta listo
+
         return redirect('lista_productos')
+
 
     

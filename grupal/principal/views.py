@@ -337,9 +337,27 @@ class SeleccionarDireccionView(View):
             request.session['direccion_envio'] = direccion.direccion
         return redirect('agregar_producto_pedido')
     
+class DireccionClienteView(View):
+    template_name = 'telovendo3app/agregar_direccion.html'
+    form_class = DireccionClienteForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            direccion = form.cleaned_data['direccion']
+            cliente = request.user.cliente
+            DireccionCliente.objects.create(cliente=cliente, direccion=direccion)
+            return redirect('agregar_producto_pedido')
+
+        return render(request, self.template_name, {'form': form})
 
 class CrearPedidoView(TemplateView):
     template_name = 'telovendo3app/crear_pedido.html'
+    form_class = DireccionClienteForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -358,7 +376,7 @@ class CrearPedidoView(TemplateView):
             # Crear una nueva dirección si no se selecciona ninguna existente
             direccion = DireccionCliente.objects.create(
                 cliente=Cliente.objects.get(username=request.user.username),
-                direccion=request.POST.get('nueva_direccion')
+                direccion=('direccion')
             )
 
         # Crear el pedido

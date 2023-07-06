@@ -84,18 +84,9 @@ class ActualizarEstadoPedidoForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['nombre', 'categoria', 'precio', 'disponibilidad', 'descripcion', 'imagen']
+        fields = ['nombre', 'categoria', 'precio', 'disponibilidad', 'descripcion']
 
-    def clean_imagen(self):
-        imagen = self.cleaned_data.get('imagen', False)
-        if imagen:
-            # Obtener la extensión del archivo
-            extension = imagen.name.split('.')[-1].lower()
-            # Lista de extensiones permitidas
-            extensiones_permitidas = ['jpg', 'jpeg', 'png', 'gif']
-            if extension not in extensiones_permitidas:
-                raise forms.ValidationError(_('Formato de imagen no válido. Las extensiones permitidas son: .jpg, .jpeg, .png, .gif.'))
-        return imagen
+    
 
 class AgregarProductoForm(forms.Form):
     producto = forms.ModelChoiceField(queryset=Producto.objects.filter(disponibilidad__gt=0))

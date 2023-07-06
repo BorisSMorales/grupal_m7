@@ -50,12 +50,18 @@ class Ingreso(TemplateView):
             return render(request, self.template_name, { "form": form })
 
 
-class ListaPedidosView(TemplateView):
+class ListaPedidosView(LoginRequiredMixin, TemplateView):
     template_name = 'telovendo3app/lista_pedidos.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['pedidos'] = Pedido.objects.all()
+        user = self.request.user
+
+        if user.is_staff:
+            context['pedidos'] = Pedido.objects.all()
+        else:
+            context['pedidos'] = Pedido.objects.filter(cliente=user.cliente)
+
         return context
 
 class AgregarPedidoView(View):

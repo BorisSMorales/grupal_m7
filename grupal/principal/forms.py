@@ -97,7 +97,7 @@ class FormSeleccionarCliente(forms.Form):
     cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())
 
 class FormPedidogestion(forms.ModelForm):
-    OPCIONES_ESTADO = [(1, 'Pendiente'), (2, 'En Proceso'), (3, 'Enviado'), (4, 'Entregado')]
+    OPCIONES_ESTADO = [('Pendiente', 'Pendiente'), ('Procesando', 'En Proceso'), ('Enviado', 'Enviado'), ('Entregado', 'Entregado')]
 
     direccion_cliente = forms.ModelChoiceField(queryset=DireccionCliente.objects.none(), required=True)
     total = forms.DecimalField(label='Total', required=True, error_messages={'required': 'El total es requerido'}, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total'}), help_text='Ingrese el total')
@@ -117,6 +117,18 @@ class DetallePedidoForm(forms.ModelForm):
     class Meta:
         model = DetallePedido
         fields = ['producto', 'cantidad', 'precio_unitario']
+
+    def __init__(self, pedido_id=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.pedido_id = pedido_id
+
+    def save(self, commit=True):
+        detalle_pedido = super().save(commit=False)
+        detalle_pedido.pedido_id = self.pedido_id
+        detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
+        if commit:
+            detalle_pedido.save()
+        return detalle_pedido
 
 
 

@@ -225,33 +225,34 @@ class PedidoGestionView(FormView):
         pedido.cliente_id = self.kwargs['cliente_id']
         pedido.save()
 
-        return redirect('agregar_detalle_pedido', pedido_id=pedido.id)
+        return redirect('detalle_pedido', pedido_id=pedido.id)
     
-class AgregarDetallePedidoView(CreateView):
-    template_name = 'principal/agregar_detalle_pedido.html'
-    form_class = DetallePedidoForm
+class DetallePedidoView(View):
+    template_name = 'telovendo3app/detalle_pedido.html'
 
-    def get_success_url(self):
-        return reverse('lista_pedidos')
+    def get(self, request, pedido_id):
+        pedido = get_object_or_404(Pedido, id=pedido_id)
+        detalles = DetallePedido.objects.filter(pedido=pedido)
+        return render(request, self.template_name, {'pedido': pedido, 'detalles': detalles})
+    
+class AgregarDetallePedidoView(FormView):
+    template_name = 'telovendo3app/agregar_detalle_pedido.html'
+    form_class = DetallePedidoForm
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['pedido'] = self.pedido
+        kwargs['pedido_id'] = int(self.kwargs['pedido_id'])
         return kwargs
 
     def form_valid(self, form):
         detalle_pedido = form.save(commit=False)
-        pedido_id = self.kwargs['pedido_id']
-        pedido = Pedido.objects.get(id=pedido_id)
-        detalle_pedido.pedido = pedido
+        detalle_pedido.pedido_id = self.kwargs['pedido_id']
         detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
         detalle_pedido.save()
-        return super().form_valid(form)
-    
+
+        return redirect('detalle_pedido', pedido_id=detalle_pedido.pedido_id)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pedido = Pedido.objects.get(pk=self.kwargs['pk'])
-        context['pedido'] = pedido
+        context['detalle_form'] = context['form']
         return context
-    
-    form_class = DetallePedidoForm

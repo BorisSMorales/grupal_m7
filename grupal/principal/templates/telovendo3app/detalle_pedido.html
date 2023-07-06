@@ -4,27 +4,32 @@
 
 {% block content %}
 
-<h1>Detalle del pedido</h1>
-<h2>Pedido #{{ pedido.id }}</h2>
+<h1>Detalle del Pedido</h1>
+
+<p>Pedido: {{ pedido }}</p>
+
 <table>
+  <thead>
     <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio unitario</th>
-        <th>Subtotal</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>Subtotal</th>
     </tr>
+  </thead>
+  <tbody>
     {% for detalle in detalles %}
     <tr>
-        <td>{{ detalle.producto.nombre }}</td>
-        <td>{{ detalle.cantidad }}</td>
-        <td>{{ detalle.precio_unitario }}</td>
-        <td>{{ detalle.subtotal }}</td>
+      <td>{{ detalle.producto }}</td>
+      <td>{{ detalle.cantidad }}</td>
+      <td>{{ detalle.precio_unitario }}</td>
+      <td>{{ detalle.subtotal }}</td>
     </tr>
     {% endfor %}
-    <tr>
-        <th colspan="3">Total:</th>
-        <th>{{ total }}</th>
-    </tr>
+  </tbody>
 </table>
+
+<a href="{% url 'agregar_detalle_pedido' pedido_id=pedido.id %}">Agregar Detalle</a>
+
 
 {% endblock %}

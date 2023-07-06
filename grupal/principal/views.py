@@ -69,11 +69,13 @@ class AgregarPedidoView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
+            
             cliente = form.cleaned_data['cliente']
             producto = form.cleaned_data['producto']
             cantidad = form.cleaned_data['cantidad']
             precio_unitario = form.cleaned_data['precio_unitario']
-            
+            direccion = form.cleaned_data['direccion']
+            form.save()
             pedido = Pedido(cliente=cliente, estado='Pendiente', total=0)
             pedido.save()
 

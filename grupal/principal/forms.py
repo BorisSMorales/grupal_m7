@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from .models import Cliente, Producto,Pedido,DireccionCliente
+from .models import Cliente, Producto,Pedido,DireccionCliente, DetallePedido
 
 class FormularioContacto(forms.Form):
     nombre = forms.CharField(label="Nombre", max_length=50, required=True,
@@ -62,6 +62,22 @@ class AgregarPedidoForm(forms.Form):
     producto = forms.ModelChoiceField(queryset=Producto.objects.all())
     cantidad = forms.IntegerField()
     precio_unitario = forms.DecimalField(decimal_places=2)
+    direccion = forms.ModelChoiceField(queryset=DireccionCliente.objects.all(), empty_label=None)
+
+    def save(self):
+        cliente = self.cleaned_data['cliente']
+        producto = self.cleaned_data['producto']
+        cantidad = self.cleaned_data['cantidad']
+        precio_unitario = self.cleaned_data['precio_unitario']
+        direccion_cliente = self.cleaned_data['direccion']
+
+        pedido = Pedido(cliente=cliente, direccion_cliente=direccion_cliente, estado='Pendiente', total=0)
+        pedido.save()
+
+        detalle_pedido = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=precio_unitario)
+        detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
+        detalle_pedido.save()
+
 
 class EliminarPedidoForm(forms.Form):
     confirmacion = forms.BooleanField(required=True)

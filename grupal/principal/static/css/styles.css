@@ -89,6 +89,14 @@ section .card{
     
 }
 
+section .direccion{
+    margin-top: 190px;
+}
+section .pedido{
+    margin-top: 150px;
+}
+
+
 section .titulo{
     justify-content: center;
 }

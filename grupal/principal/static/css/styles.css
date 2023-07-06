@@ -14,7 +14,6 @@
 }
 
 body {
-    position: relative;
     min-height: 100vh;
     background: var(--bg-color);
     color: var(--text-color);
@@ -37,12 +36,7 @@ nav {
 
 section{
     text-align: left;
-
-}
-
-section .login{
-    padding-top: 40px;
-
+    padding-top: 80px;
 }
 
 section label {
@@ -66,11 +60,6 @@ section select{
     width: 315px;
 } 
 
-section .py-5 .py-lg-5{
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-}
-
 section .card{
     align-items: center;
     padding: 5px;
@@ -88,13 +77,8 @@ section .titulo{
 }
 
 footer {
-    text-align: center;
-    background-color: black;
-    color: white;
-    padding: 5px;
-    position: absolute;
+    margin-top: 50px;
     bottom: 0;
-    width: 100%;
     -webkit-box-shadow: 0 -10px 5px 0 #FF0000;
     box-shadow: 0 -10px 5px 0 #FF0000;
 }
@@ -127,7 +111,7 @@ footer {
     color: var(--text-color);
     font-size: 1.1rem;
     font-weight: 500;
-    
+    padding: 5px 0;
     margin: 0px 30px;
     transition: all .50s ease;
     text-decoration: none !important;
@@ -207,16 +191,13 @@ footer {
         top: 100%;
         right: -100%;
         width: 270px;
-        height: fit-content;
+        height: 23vh;
         background: var(--main-color);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         border-radius: 10px;
         transition: all .50s ease;
-    }
-    .main a{
-        font-size: 0;
     }
     .nav-bar a{
         display: block;

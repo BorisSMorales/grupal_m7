@@ -1,0 +1,11 @@
+{% extends 'telovendo3app/base.html' %}
+
+{% block content %}
+  <h1>Agregar Detalle de Pedido</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ detalle_form.as_p }}
+    <button type="submit">Agregar Detalle</button>
+  </form>
+  
+{% endblock %}

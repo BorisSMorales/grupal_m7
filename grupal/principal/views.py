@@ -1,20 +1,23 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render,get_object_or_404
+from django.shortcuts import redirect, render,get_object_or_404, reverse
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from principal.forms import FormularioContacto, LoginForm, RegistroForm,ActualizarEstadoPedidoForm
 from django.views.generic import TemplateView
+from django.views.generic import FormView
+
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import authenticate, login
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.models import Group
 from .models import DetallePedido, Pedido,Producto, Cliente
 from django.views.generic import ListView
 from django.db.models import Sum
 from django.views import View
-from .forms import OPCIONES_ESTADO, AgregarPedidoForm, EliminarPedidoForm
-from .forms import ProductoForm
+from .forms import OPCIONES_ESTADO, EliminarPedidoForm, ProductoForm, DetallePedidoForm, FormPedidogestion, FormSeleccionarCliente
 from .models import DireccionCliente
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 
 
 # Create your views here.
@@ -59,49 +62,7 @@ class ListaPedidosView(TemplateView):
         context['pedidos'] = Pedido.objects.all()
         return context
 
-class AgregarPedidoView(View):
-    template_name = 'telovendo3app/agregar_pedido.html'
-    form_class = AgregarPedidoForm
 
-    def get(self, request, *args, **kwargs):
-        cliente_id = request.GET.get('cliente_id')
-        form = self.form_class(cliente=cliente_id)
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            cliente = form.cleaned_data['cliente']
-            producto = form.cleaned_data['producto']
-            cantidad = form.cleaned_data['cantidad']
-            precio_unitario = form.cleaned_data['precio_unitario']
-            direccion = form.cleaned_data['direccion']  # Obtener la dirección ingresada en el formulario
-            pedido = Pedido(cliente=cliente, estado='Pendiente', total=0)
-            pedido.save()
-
-            detalle_pedido = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=precio_unitario)
-            detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
-            detalle_pedido.save()
-
-            # Guardar la dirección asociada al cliente en la base de datos
-            direccion_cliente = DireccionCliente(cliente=cliente, direccion=direccion)
-            direccion_cliente.save()
-
-            # Actualizar el total del pedido
-            pedido.total = DetallePedido.objects.filter(pedido=pedido).aggregate(total=Sum('subtotal'))['total']
-            pedido.save()
-
-            # Envío de correo electrónico
-            subject = 'Nuevo pedido agregado'
-            message = f"Se ha agregado un nuevo pedido.\n\nCliente: {cliente}\nProducto: {producto}\nCantidad: {cantidad}\nPrecio unitario: {precio_unitario}"
-            from_email = 'talento@fabricadecodigo.dev'
-            to_email = ['arayadiaz.ac@gmail.com'] 
-            #to_email = [request.user.email]
-            send_mail(subject, message, from_email, to_email)
-
-            return redirect('lista_pedidos')
-
-        return render(request, self.template_name, {'form': form})
 
 class EliminarPedidoView(View):
     template_name = 'telovendo3app/eliminar_pedido.html'
@@ -144,6 +105,9 @@ class ListaProductosView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['productos'] = Producto.objects.all()
+        
+    
+
         return context
 
 
@@ -229,3 +193,65 @@ class RegistroView(TemplateView):
             return redirect(self.success_url)
 
         return render(request, self.template_name, {'form': form})
+    
+# class GestionPedidoView(TemplateView):
+#     template_name = 'agregar_pedido.html'
+#     form_class = DireccionClienteForm
+
+
+class SeleccionarClienteView(View):
+    template_name = 'telovendo3app/seleccionar_cliente.html'
+    form_class = FormSeleccionarCliente
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        cliente_id = request.POST.get('cliente')
+        return redirect('agregar_pedido', cliente_id=int(cliente_id))
+
+class PedidoGestionView(FormView):
+    template_name = 'telovendo3app/agregar_pedido.html'
+    form_class = FormPedidogestion
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['cliente_id'] = int(self.kwargs['cliente_id'])
+        return kwargs
+      
+    def form_valid(self, form):
+        pedido = form.save(commit=False)
+        pedido.cliente_id = self.kwargs['cliente_id']
+        pedido.save()
+
+        return redirect('agregar_detalle_pedido', pedido_id=pedido.id)
+    
+class AgregarDetallePedidoView(CreateView):
+    template_name = 'principal/agregar_detalle_pedido.html'
+    form_class = DetallePedidoForm
+
+    def get_success_url(self):
+        return reverse('lista_pedidos')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['pedido'] = self.pedido
+        return kwargs
+
+    def form_valid(self, form):
+        detalle_pedido = form.save(commit=False)
+        pedido_id = self.kwargs['pedido_id']
+        pedido = Pedido.objects.get(id=pedido_id)
+        detalle_pedido.pedido = pedido
+        detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
+        detalle_pedido.save()
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pedido = Pedido.objects.get(pk=self.kwargs['pk'])
+        context['pedido'] = pedido
+        return context
+    
+    form_class = DetallePedidoForm

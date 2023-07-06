@@ -25,14 +25,12 @@
             <li><a href="#">Acerca de Nosotros</a></li>
             {% comment %} <li><a href="#">Productos</a></li> {% endcomment %}
             <li><a href="#">Contacto</a></li>
-            {% if user.is_staff %}
-            <li><a href="{% url 'lista_pedidos' %}" class="user logo"></i>Gestión Pedidos</a></li>
-            <li><a href="{% url 'lista_productos' %}" class="user logo"></i>Gestión Productos</a></li>
-            {% endif %}
         </ul>
 
         <div class="main">
             {% if user.is_authenticated %}
+            <a href="{% url 'lista_pedidos' %}" class="user logo"><i class='bx bx-checkbox-checked'></i>Gestión Pedidos</a>
+            <a href="{% url 'lista_productos' %}" class="user logo"><i class='bx bx-checkbox-checked'></i>Gestión Productos</a>
             <a href="{% url 'logout' %}" class="user logo"><i class="ri-logout-box-line"></i>Cerrar Sesión</a>
             {% else %}
             <a href="{% url 'Login' %}" class="user logo"><i class="ri-login-box-line"></i>Iniciar Sesión</a>
@@ -42,7 +40,7 @@
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
 
-    </nav><br><br><br>
+    </nav>
     
     <section>
         {% block content %}{% endblock%}

@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Cliente, Producto,Pedido,DireccionCliente
+from .models import Cliente, Producto,Pedido,DireccionCliente, DetallePedido
+from django.forms.models import inlineformset_factory
 
 class FormularioContacto(forms.Form):
     nombre = forms.CharField(label="Nombre", max_length=50, required=True,
@@ -61,13 +62,8 @@ class AgregarPedidoForm(forms.Form):
     producto = forms.ModelChoiceField(queryset=Producto.objects.all())
     cantidad = forms.IntegerField()
     precio_unitario = forms.DecimalField(decimal_places=2)
-    direccion = forms.CharField(max_length=200, required=True)
 
-    def __init__(self, *args, **kwargs):
-        cliente = kwargs.pop('cliente', None)
-        super().__init__(*args, **kwargs)
-        if cliente:
-            self.fields['direccion'].queryset = DireccionCliente.objects.filter(cliente=cliente)
+
 
 class EliminarPedidoForm(forms.Form):
     confirmacion = forms.BooleanField(required=True)
@@ -91,3 +87,36 @@ class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = ['nombre', 'categoria', 'precio', 'disponibilidad', 'descripcion']
+
+class DireccionClienteForm(forms.ModelForm):
+    class Meta:
+        model = DireccionCliente
+        fields = ['direccion']
+
+class FormSeleccionarCliente(forms.Form):
+    cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())
+
+class FormPedidogestion(forms.ModelForm):
+    OPCIONES_ESTADO = [(1, 'Pendiente'), (2, 'En Proceso'), (3, 'Enviado'), (4, 'Entregado')]
+
+    direccion_cliente = forms.ModelChoiceField(queryset=DireccionCliente.objects.none(), required=True)
+    total = forms.DecimalField(label='Total', required=True, error_messages={'required': 'El total es requerido'}, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total'}), help_text='Ingrese el total')
+    estado = forms.ChoiceField(choices=OPCIONES_ESTADO, required=True, error_messages={'required': 'El estado es requerido'}, widget=forms.Select(attrs={'class': 'form-control'}), help_text='Seleccione el estado del pedido')
+
+    class Meta:
+        model = Pedido
+        fields = ['direccion_cliente', 'total', 'estado']
+
+    def __init__(self, cliente_id=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if cliente_id:
+            cliente = Cliente.objects.get(id=cliente_id)
+            self.fields['direccion_cliente'].queryset = cliente.direccioncliente_set.all()
+
+class DetallePedidoForm(forms.ModelForm):
+    class Meta:
+        model = DetallePedido
+        fields = ['producto', 'cantidad', 'precio_unitario']
+
+
+

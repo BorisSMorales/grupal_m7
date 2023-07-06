@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bacup', 
+        'NAME': 'db_test', 
         'USER': 'grupal_m7',
         'PASSWORD': '123',
         'HOST': 'localhost', 

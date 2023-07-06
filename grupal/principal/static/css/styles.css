@@ -48,6 +48,14 @@ section label {
     width: 100px;
 }
 
+section .productos{
+    margin-bottom: 10px;
+    border: 5px solid var(--bg-color);
+    border-radius: 50%;
+    -webkit-box-shadow: 10px 10px 10px -5px var(--main-color);
+    box-shadow: 10px 10px 10px -5px var(--main-color);
+}
+
 section label {
     width: 100px;
     margin-top: 15px;

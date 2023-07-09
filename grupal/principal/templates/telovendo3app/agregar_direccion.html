@@ -3,21 +3,23 @@
 {%block Title%}Agregar Dirección{%endblock%}
 
 {% block content %}
-<section class="gradient-custom">
-  <div class="container">
-      <div class="row d-flex justify-content-center align-items-center">
-          <div class="col-12 col-md-8 col-lg-6 ">
-              <div class="card bg-dark text-white direccion">
-                <h1>Guardar Dirección</h1>
 
-                <form method="post">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  <button type="submit">Guardar dirección</button>
-                </form>
+  <section class="gradient-custom">
+      <div class="container ">
+          <div class="row d-flex justify-content-center align-items-center">
+              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                  <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                      <div class="card-body">
+                        <h3 class="card-title">Guardar Dirección</h3><br>
+                        <form method="post">
+                          {% csrf_token %}
+                          {{ form.as_p }}
+                          <button type="submit">Guardar</button>
+                        </form>
+                      </div>
+                  </div>
               </div>
           </div>
       </div>
-  </div>
-<section>          
+  </section>                               
 {% endblock %}

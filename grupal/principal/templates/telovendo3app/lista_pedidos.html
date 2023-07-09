@@ -5,15 +5,13 @@
 
 {% block content %}
 
-<<<<<<< Updated upstream
+
 <h2 class="text-center mt-5">Lista de pedidos 💞</h2><br>
-=======
 {% if user.is_staff %}
     <h1 class="text-center mt-5">Gestión de Pedidos</h1>
 {% else %}
     <h1 class="text-center mt-5">Tus Pedidos</h1>
 {% endif %}
->>>>>>> Stashed changes
 
 <section>
     <div class="container">
@@ -40,12 +38,10 @@
                             <td>{{ pedido.estado }}</td>
                             <td>{{ pedido.total }}</td>
                             <td>
-<<<<<<< Updated upstream
                                 <a class="btn btn-sm btn-danger" href="{% url 'actualizar_estado_pedido' pedido.id %}" role="button">Editar Estado</a>
                             </td>
                             <td>
                                 <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
-=======
                                 {% if user.is_staff  %}
                                     <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
                                 {% endif %}
@@ -56,24 +52,20 @@
                                 {% if user.is_staff %}
                                     <a class="btn btn-sm btn-danger" href="{% url 'actualizar_estado_pedido' pedido.id %}" role="button">Editar Estado</a>
                                 {% endif %}
->>>>>>> Stashed changes
                             </td>
                             </tr>
                             {% endfor %}
                             <tr>
                                 <td>
-<<<<<<< Updated upstream
                                 {% if user.is_staff %}
                                 <a class="btn btn-sm btn-danger" href="{% url 'seleccionar_cliente' %}" role="button">Agregar Pedido</a>
                                 {% endif %}
- 
                             </td>
-=======
+
                                     {% if user.is_staff %}
                                         <a class="btn btn-sm btn-danger" href="{% url 'agregar_pedido' %}" role="button">Agregar Pedido</a>
                                     {% endif %}
                                 </td>
->>>>>>> Stashed changes
                             </tr>
                         </tbody>
                     </table>

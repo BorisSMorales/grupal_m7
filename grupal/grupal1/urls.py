@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from principal.views import home, Ingreso, EliminarPedidoView, ListaPedidosView, ActualizarEstadoPedidoView, ListaProductosView, EliminarProductoView, CrearProductoView,RegistroView,PedidoGestionView, SeleccionarClienteView, DetallePedidoView, AgregarDetallePedidoView
+from principal.views import home, Ingreso, EliminarPedidoView, ListaPedidosView, ActualizarEstadoPedidoView, ListaProductosView, EliminarProductoView, CrearProductoView,RegistroView,PedidoGestionView, SeleccionarClienteView, DetallePedidoGestionView, AgregarDetallePedidoView
 
 
 urlpatterns = [
@@ -34,7 +34,7 @@ urlpatterns = [
     path('productos/eliminar/<int:producto_id>/', EliminarProductoView.as_view(), name='eliminar_producto'),
     path('registro/',RegistroView.as_view(), name= 'Registro'),
     path('seleccionar_cliente/', SeleccionarClienteView.as_view(), name='seleccionar_cliente'),
-    path('agregar_pedido/<int:cliente_id>/', PedidoGestionView.as_view(), name='agregar_pedido'),  
-    path('detalle-pedido/<int:pedido_id>/', DetallePedidoView.as_view(), name='detalle_pedido'),
+    path('agregar_pedido_gestion/<int:cliente_id>/', PedidoGestionView.as_view(), name='agregar_pedido'),  
+    path('detalle-pedido_gestion/<int:pedido_id>/', DetallePedidoGestionView.as_view(), name='detalle_pedido'),
     path('agregar-detalle-pedido/<int:pedido_id>/', AgregarDetallePedidoView.as_view(), name='agregar_detalle_pedido'),
 ]

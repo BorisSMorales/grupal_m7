@@ -212,7 +212,7 @@ class SeleccionarClienteView(View):
         return redirect('agregar_pedido', cliente_id=int(cliente_id))
 
 class PedidoGestionView(FormView):
-    template_name = 'telovendo3app/agregar_pedido.html'
+    template_name = 'telovendo3app/agregar_pedido_gestion.html'
     form_class = FormPedidogestion
 
     def get_form_kwargs(self):
@@ -227,8 +227,8 @@ class PedidoGestionView(FormView):
 
         return redirect('detalle_pedido', pedido_id=pedido.id)
     
-class DetallePedidoView(View):
-    template_name = 'telovendo3app/detalle_pedido.html'
+class DetallePedidoGestionView(View):
+    template_name = 'telovendo3app/detalle_pedido_gestion.html'
 
     def get(self, request, pedido_id):
         pedido = get_object_or_404(Pedido, id=pedido_id)

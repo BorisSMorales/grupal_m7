@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_test', 
-        'USER': 'grupal_m7',
-        'PASSWORD': '123',
-        'HOST': 'localhost', 
+        'NAME': 'db_grupo4_0z3z', 
+        'USER': 'grupo4',
+        'PASSWORD': 'eFx1uPokGuUqCgHyEmvnw4NntyaAeqA7',
+        'HOST': 'dpg-cil2gb95rnuvtgto5aj0-a.oregon-postgres.render.com', 
         'PORT': '5432',
     }
     # 'default': {

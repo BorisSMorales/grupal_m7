@@ -47,6 +47,7 @@ class LoginForm(forms.Form):
                                 })
                                 )
 
+
 class RegistroForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
@@ -108,16 +109,45 @@ class AgregarProductoForm(forms.Form):
     producto = forms.ModelChoiceField(queryset=Producto.objects.filter(disponibilidad__gt=0))
     cantidad = forms.IntegerField(min_value=1, max_value=10)
 
-# class AgregarProductoForm(forms.Form):
-#     producto = forms.ModelChoic|eField(queryset=Producto.objects.all())
-#     cantidad = forms.IntegerField()
-
-#     def __init__(self, *args, **kwargs):
-#         cantidades_disponibles = kwargs.pop('cantidades_disponibles')
-#         super().__init__(*args, **kwargs)
-#         self.fields['cantidad'].widget = forms.Select(choices=[(cantidad, cantidad) for cantidad in cantidades_disponibles])
 
 class DireccionClienteForm(forms.ModelForm):
     class Meta:
         model = DireccionCliente
         fields = ['direccion']
+
+class FormSeleccionarCliente(forms.Form):
+    cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())
+
+class FormPedidogestion(forms.ModelForm):
+    OPCIONES_ESTADO = [('Pendiente', 'Pendiente'), ('Procesando', 'En Proceso'), ('Enviado', 'Enviado'), ('Entregado', 'Entregado')]
+
+    direccion_cliente = forms.ModelChoiceField(queryset=DireccionCliente.objects.none(), required=True)
+    total = forms.DecimalField(label='Total', required=True, error_messages={'required': 'El total es requerido'}, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total'}), help_text='Ingrese el total')
+    estado = forms.ChoiceField(choices=OPCIONES_ESTADO, required=True, error_messages={'required': 'El estado es requerido'}, widget=forms.Select(attrs={'class': 'form-control'}), help_text='Seleccione el estado del pedido')
+
+    class Meta:
+        model = Pedido
+        fields = ['direccion_cliente', 'total', 'estado']
+
+    def __init__(self, cliente_id=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if cliente_id:
+            cliente = Cliente.objects.get(id=cliente_id)
+            self.fields['direccion_cliente'].queryset = cliente.direccioncliente_set.all()
+
+class DetallePedidoForm(forms.ModelForm):
+    class Meta:
+        model = DetallePedido
+        fields = ['producto', 'cantidad', 'precio_unitario']
+
+    def __init__(self, pedido_id=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.pedido_id = pedido_id
+
+    def save(self, commit=True):
+        detalle_pedido = super().save(commit=False)
+        detalle_pedido.pedido_id = self.pedido_id
+        detalle_pedido.subtotal = detalle_pedido.cantidad * detalle_pedido.precio_unitario
+        if commit:
+            detalle_pedido.save()
+        return detalle_pedido

@@ -1,0 +1,28 @@
+{% extends 'telovendo3app/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<section class="gradient-custom">
+    <div class="container ">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body">
+                        <h3 class="card-title">Agregar Pedido</h3><br>
+                        <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        
+                        
+                        <button class="btn btn-sm btn-danger" type="submit" value="Agregar Pedido">Agregar Pedido</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+</section>
+
+{% endblock %}

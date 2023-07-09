@@ -35,7 +35,7 @@
   <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
     {% csrf_token %}
     <input type="text" name="total" value="{{ pedido.total }}">
-    <button type="submit">Guardar</button>
+    <a href="{% url 'lista_productos' %}">Guardar</a>
   </form>
   
 {% endblock %}

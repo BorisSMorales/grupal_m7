@@ -21,14 +21,14 @@
                     </div>
                     <h4 class="pb-2 mb-4 text-danger border-bottom border-danger">{{ producto.nombre }}</h4>
                     <div class="my-4">
-                    <ul>
-                        <li>ID Producto: {{ producto.id }}</li>
-                        <li>Categoría: {{ producto.categoria }}</li>
-                        <li>Precio: {{ producto.precio }}</li>
-                        <li>Stock: {{ producto.disponibilidad }}</li>
-                        <li>Descripción: {{ producto.descripcion }}</li>
-                    </ul>
-                   </div>
+                        <ul>
+                            <li>ID Producto: {{ producto.id }}</li>
+                            <li>Categoría: {{ producto.categoria }}</li>
+                            <li>Precio: {{ producto.precio }}</li>
+                            <li>Stock: {{ producto.disponibilidad }}</li>
+                            <li>Descripción: {{ producto.descripcion }}</li>
+                        </ul>
+                    </div>
                     <div class="cantidad my-2">
                         <label>Cantidad:</label>
                         <form method="post" action="{% url 'agregar_producto_pedido' %}">

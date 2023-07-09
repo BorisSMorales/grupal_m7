@@ -25,9 +25,9 @@
             <li><a href="#">Acerca de Nosotros</a></li>
             {% comment %} <li><a href="#">Productos</a></li> {% endcomment %}
             <li><a href="#">Contacto</a></li>
+            <li><a href="{% url 'lista_productos' %}">Productos</a></li>
             {% if user.is_staff %}
             <li><a href="{% url 'lista_pedidos' %}" class="user logo"></i>Gestión Pedidos</a></li>
-            <li><a href="{% url 'lista_productos' %}" class="user logo"></i>Gestión Productos</a></li>
             {% endif %}
         </ul>
 
@@ -43,7 +43,7 @@
         </div>
 
     </nav><br><br><br>
-    
+
     <section>
         {% block content %}{% endblock%}
     </section>

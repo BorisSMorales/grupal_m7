@@ -1,15 +1,23 @@
 {% extends 'telovendo3app/base.html' %}
 {% load static %}
 
+{%block Title%}Lista Pedidos{%endblock%}
 
 {% block content %}
 
-<h1 class="text-center mt-5">Gestion Pedidos</h1>
+{% if user.is_staff %}
+<h2 class="text-center mt-5">Lista de pedidos 💞</h2><br>
+    <h1 class="text-center mt-5">Gestión de Pedidos</h1>
+{% else %}
+    <h1 class="text-center mt-5">Tus Pedidos 💞</h1>
+{% endif %}
 
 <section>
     <div class="container">
-                <div class="table-responsive">
-                    <table class="table table-dark table-bordered border-danger border border-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 login" style="width: max-content;">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <table class="table table-dark">
                         <thead>
                             <tr>
                                 <th scope="col">ID del pedido</th>
@@ -28,16 +36,26 @@
                             <td>{{ pedido.cliente.nombre }}</td>
                             <td>{{ pedido.estado }}</td>
                             <td>{{ pedido.total }}</td>
+
                             <td>
-                                <a class="btn btn-sm btn-danger" href="{% url 'actualizar_estado_pedido' pedido.id %}" role="button">Editar Estado</a>
-                                <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
+                                {% if user.is_staff  %}
+                                    <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
+                                {% endif %}
+                                {% if user.is_authenticated and pedido.estado in "Pendiente,procesando" and pedido.cliente.id == user.id %}
+                                    <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
+                                {% endif %}
+        
+                                {% if user.is_staff %}
+                                    <a class="btn btn-sm btn-danger" href="{% url 'actualizar_estado_pedido' pedido.id %}" role="button">Editar Estado</a>
+                                {% endif %}
                             </td>
                             </tr>
                             {% endfor %}
                             <tr>
-                                <td colspan="5"></td>
                                 <td>
-                                <a class="btn btn-sm btn-danger" href="{% url 'agregar_pedido' %}" role="button">Agregar Pedido</a>
+                                {% if user.is_staff %}
+                                <a class="btn btn-sm btn-danger" href="{% url 'seleccionar_cliente' %}" role="button">Agregar Pedido</a>
+                                {% endif %}
                                 </td>
                             </tr>
                         </tbody>

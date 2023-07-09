@@ -1,22 +1,32 @@
 {% extends 'telovendo3app/base.html' %}
 {% load static %}
+{%block Title%}Pedidos Clientes{%endblock%}
 
 {% block content %}
-  <h1>Lista de Productos</h1>
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% for direccion in direcciones %}
-        <input type="radio" name="direccion_id" value="{{ direccion.id }}">
-        <label>{{ direccion.direccion }}</label>
-      {% endfor %}
-      <button type="submit">Agregar producto al pedido</button>
-
-  </form>
-
-  {% comment %} <a href="{% url 'detalles_pedido' pedido.id %}">Ver detalles del pedido</a> {% endcomment %}
-  <a href="{% url 'agregar_direccion_cliente' %}">Agregar dirección de envío</a>
-
+<section class="gradient-custom">
+    <div class="container ">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body">
+                        <h3 class="card-title">Lista de Productos</h3><br>
+                        <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% for direccion in direcciones %}
+                            <input type="radio" name="direccion_id" value="{{ direccion.id }}">
+                            <label>{{ direccion.direccion }}</label>
+                            {% endfor %}
+                            <button type="submit">Agregar producto al pedido</button>
+                        </form>
+                        {% comment %} <a href="{% url 'detalles_pedido' pedido.id %}">Ver detalles del pedido</a> {% endcomment %}
+                        <a href="{% url 'agregar_direccion_cliente' %}">Agregar dirección de envío</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>                                      
 {% endblock %}
 

@@ -1,41 +1,55 @@
 {% extends 'telovendo3app/base.html' %}
-{%load static%}
+{% load static %}
+{%block Title%}Lista Productos{%endblock%}
 
 {% block content %}
 
 <h2 class="text-center mt-5">Lista de productos 💞</h2><br>
 
-
 <section>
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 g-4" id=" productos">
+        {% if user.is_authenticated %}
+        <a class="btn btn-sm btn-danger" href="{% url 'crear_pedido' %}">Crear nuevo pedido</a>
+        {% endif %}
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="productos">
             {% for producto in productos %}
-            <div class="col ">
+            <div class="col">
                 <div class="card h-100">
                     <div>
                         <img class="productos" src="{{ producto.imagen.url }}" alt="...">
                     </div>
                     <h4 class="pb-2 mb-4 text-danger border-bottom border-danger">{{ producto.nombre }}</h4>
+                    <div class="my-4">
                         <ul>
                             <li>ID Producto: {{ producto.id }}</li>
-                            <li>Catergoría: {{ producto.categoria }}</li>
+                            <li>Categoría: {{ producto.categoria }}</li>
                             <li>Precio: {{ producto.precio }}</li>
                             <li>Stock: {{ producto.disponibilidad }}</li>
-                            <li>Drescripción: {{ producto.descripcion }}</li>
+                            <li>Descripción: {{ producto.descripcion }}</li><br><br><br>
                         </ul>
-                    <div class="cantidad">
-                        <label >Cantidad:</label>
-                        <input class="border-danger " style="width: 100px;" type="number" id="quantity-prod-001" value="1" min="1">
-                        <a class="btn btn-danger btn-sm" type="a">Agregar</a>
+                    </div>
+                    <div class="cantidad my-2">
+                        <label>Cantidad:</label>
+                        <form method="post" action="{% url 'agregar_producto_pedido' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto" value="{{ producto.id }}">
+                            <div class="form-group">
+                                <input type="number" name="cantidad" class="form-control" min="1" value="1">
+                            </div>
+                            {% if request.session.pedido_id %}
+                                <br><button class="btn btn-sm btn-danger" type="submit">Agregar</button>
+                            {% endif %}
+                        </form>
                     </div>
                 </div><br>
             </div>
             {% empty %}
             <p>No hay productos disponibles.</p>
-            {% endfor %}   
+            {% endfor %}
         </div><br>
     </div>
-</Section>
+</section>
 {% if user.is_staff %}
 <section>
     <div class="container">
@@ -74,7 +88,7 @@
             </div>
         </div>
     </div>
-</section>                        
-{% endif %}  
-</section><br><br><br><br>
+</section>
+{% endif %}
+<br><br><br><br>
 {% endblock %}

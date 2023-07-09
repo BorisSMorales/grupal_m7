@@ -1,0 +1,39 @@
+{% extends 'telovendo3app/base.html' %}
+{% load static %}
+{%block Title%}Crear Pedido{%endblock%}
+
+{% block content %}
+<style>
+  footer{
+      position: absolute;
+  }
+</style>
+<section class="gradient-custom">
+  <div class="container ">
+      <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5 login">
+              <div class="card bg-dark text-white pedido">
+                  <h1 class="my-3">Crear Nuevo Pedido</h1>
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group align-middle">
+                      <label class="my-3" for="direccion_cliente">Dirección de envío:</label>
+                      <select class="my-3" id="direccion_cliente" name="direccion_cliente">
+                        <option value="">Seleccionar dirección existente</option>
+                        {% for direccion in direcciones %}
+                        <option value="{{ direccion.id }}">{{ direccion.direccion }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div>
+                      <a class="btn btn-danger my-2 mx-3" href="{% url 'agregar_direccion_cliente' %}">Agregar dirección de envío</a>
+                      <button class="btn btn-danger my-2" type="submit">Crear pedido</button>
+                    </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+{% endblock %}
+

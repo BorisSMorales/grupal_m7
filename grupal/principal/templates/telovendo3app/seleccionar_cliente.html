@@ -1,0 +1,28 @@
+{% extends 'telovendo3app/base.html' %}
+
+{%block Title%}Seleccionar Cliente{%endblock%}
+
+{% block content %}
+<style>
+  footer{
+      position: absolute;
+  }
+</style>
+<section class="gradient-custom" >
+  <div class="container ">
+      <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5 login">
+              <div class="card bg-dark text-white">
+                <h1>Seleccionar Cliente</h1>
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button class="btn btn-sm btn-danger" type="submit">Continuar</button>
+                </form>
+              </div>
+          </div>    
+      </div>
+  </div>
+</section> 
+{% endblock %}
+

@@ -5,12 +5,11 @@
 
 {% block content %}
 
-
-<h2 class="text-center mt-5">Lista de pedidos 💞</h2><br>
 {% if user.is_staff %}
+<h2 class="text-center mt-5">Lista de pedidos 💞</h2><br>
     <h1 class="text-center mt-5">Gestión de Pedidos</h1>
 {% else %}
-    <h1 class="text-center mt-5">Tus Pedidos</h1>
+    <h1 class="text-center mt-5">Tus Pedidos 💞</h1>
 {% endif %}
 
 <section>

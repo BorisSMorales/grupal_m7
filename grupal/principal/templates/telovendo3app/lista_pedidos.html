@@ -39,8 +39,10 @@
                             <tr>
                                 <td colspan="5"></td>
                                 <td>
+                                    {% if user.is_staff %}
                                 <a class="btn btn-sm btn-danger" href="{% url 'seleccionar_cliente' %}" role="button">Agregar Pedido</a>
-                                </td>
+                                {% if user.is_staff %}    
+                            </td>
                             </tr>
                         </tbody>
                     </table>

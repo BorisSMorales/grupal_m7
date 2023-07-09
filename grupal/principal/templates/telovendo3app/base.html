@@ -29,6 +29,9 @@
             {% if user.is_staff %}
             <li><a href="{% url 'lista_pedidos' %}" class="user logo"></i>Gestión Pedidos</a></li>
             {% endif %}
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'lista_pedidos' %}" class="user logo"></i>Tus Pedidos</a></li>
+            {% endif %}
         </ul>
 
         <div class="main">

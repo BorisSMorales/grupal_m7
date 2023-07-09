@@ -37,11 +37,8 @@
                             <td>{{ pedido.cliente.nombre }}</td>
                             <td>{{ pedido.estado }}</td>
                             <td>{{ pedido.total }}</td>
+
                             <td>
-                                <a class="btn btn-sm btn-danger" href="{% url 'actualizar_estado_pedido' pedido.id %}" role="button">Editar Estado</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
                                 {% if user.is_staff  %}
                                     <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
                                 {% endif %}
@@ -60,11 +57,6 @@
                                 {% if user.is_staff %}
                                 <a class="btn btn-sm btn-danger" href="{% url 'seleccionar_cliente' %}" role="button">Agregar Pedido</a>
                                 {% endif %}
-                            </td>
-
-                                    {% if user.is_staff %}
-                                        <a class="btn btn-sm btn-danger" href="{% url 'agregar_pedido' %}" role="button">Agregar Pedido</a>
-                                    {% endif %}
                                 </td>
                             </tr>
                         </tbody>

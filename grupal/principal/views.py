@@ -106,8 +106,6 @@ class ListaProductosView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['productos'] = Producto.objects.all()
         
-    
-
         return context
 
 

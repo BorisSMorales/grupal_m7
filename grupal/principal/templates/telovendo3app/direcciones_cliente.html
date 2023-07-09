@@ -3,16 +3,27 @@
 {%block Title%}Dirección Cliente{%endblock%}
 
 {% block content %}
-  <h1>Seleccionar Dirección de Envío</h1>
-
-  <form method="post">
-    {% csrf_token %}
-    {% for direccion in direcciones %}
-      <div>
-        <input type="radio" name="direccion_id" value="{{ direccion.id }}">
-        <label>{{ direccion.direccion }}</label>
+  <section class="gradient-custom">
+      <div class="container ">
+          <div class="row d-flex justify-content-center align-items-center">
+              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                  <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                      <div class="card-body">
+                        <h3 class="card-title">Seleccionar Dirección de Envío</h3><br>
+                        <form method="post">
+                          {% csrf_token %}
+                          {% for direccion in direcciones %}
+                            <div>
+                              <input type="radio" name="direccion_id" value="{{ direccion.id }}">
+                              <label>{{ direccion.direccion }}</label>
+                            </div>
+                          {% endfor %}
+                          <button type="submit">Seleccionar dirección</button>
+                        </form>
+                      </div>
+                  </div>
+              </div>    
+          </div>
       </div>
-    {% endfor %}
-    <button type="submit">Seleccionar dirección</button>
-  </form>
+  </section>                
 {% endblock %}

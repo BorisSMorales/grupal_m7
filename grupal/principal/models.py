@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, User
+from PIL import Image
 
 # Create your models here.
 
@@ -57,6 +58,18 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.imagen:
+            img = Image.open(self.imagen.path)
+
+            tamano_deseado = (225, 225)
+
+            img.thumbnail(tamano_deseado)
+            
+            img.save(self.imagen.path)
 
 
 class Pedido(models.Model):

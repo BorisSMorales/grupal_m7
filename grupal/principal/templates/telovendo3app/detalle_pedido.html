@@ -7,10 +7,10 @@
   <div class="container">
       <div class="row d-flex justify-content-center align-items-center">
           <div class="col-12 col-md-8 col-lg-6 login" style="width: max-content;">
-              <h1>Detalles del Pedido</h1>
+              <h1 style="padding-left: 50px;">Detalles del Pedido</h1>
               <div class="card bg-dark text-white" style="border-radius: 1rem;">
                 <h2>Pedido: {{ pedido }}</h2>
-                <h2>Estado: ({{ pedido.estado }})</h2>
+                <h2 >Estado: ({{ pedido.estado }})</h2>
                 <table class="table table-dark">
                   <thead>
                     <tr>
@@ -33,9 +33,9 @@
                 </table>
                 <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
                   {% csrf_token %}
-                  <input type="text" name="total" value="{{ pedido.total }}">
-                  <a href="{% url 'lista_productos' %}" class="btn btn-danger my-2">Guardar</a>
+                  <p style="padding-left: 270px;">Total: {{ pedido.total }}</p>
                 </form>
+                <a href="{% url 'lista_productos' %}" class="btn btn-danger my-2">Guardar</a>
                 <a href="{% url 'lista_productos' %}" class="btn btn-danger my-2" > Volver a agregar productos</a>
                 <p>Dirección de envío: {{ direccion_envio }}</p>
               </div>  

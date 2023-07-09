@@ -22,7 +22,7 @@ class Cliente(User):
         self.telefono = self.telefono
         self.nombre = self.username  # Asignar el valor de username a nombre
         self.correo_electronico = self.email  # Asignar el valor de email a correo_electronico
-        super().save(args, **kwargs)  # Llamar al método save() de la clase padre
+        super().save(*args, **kwargs)  # Llamar al método save() de la clase padre
 
     def str(self):
         return self.username
@@ -61,6 +61,7 @@ class Producto(models.Model):
 class Pedido(models.Model):
     fecha_pedido = models.DateField(auto_now_add=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    direccion_cliente = models.ForeignKey(DireccionCliente, on_delete=models.SET_NULL, null=True) 
     total = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
     estado = models.CharField(max_length=50,null=False,blank=False)
 

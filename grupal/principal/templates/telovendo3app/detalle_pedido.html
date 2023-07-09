@@ -1,5 +1,6 @@
 {% extends 'telovendo3app/base.html' %}
 {% load static %}
+{%block Title%}Detalle Pedido{%endblock%}
 
 {% block content %}
   <h1>Detalles del Pedido</h1>
@@ -28,7 +29,14 @@
     </tbody>
   </table>
 
-  <a href="{% url 'agregar_producto_pedido' %}">Volver a agregar productos</a>
+  <a href="{% url 'lista_productos' %}">Volver a agregar productos</a>
 
   <p>Dirección de envío: {{ direccion_envio }}</p>
+
+  <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
+    {% csrf_token %}
+    <input type="text" name="total" value="{{ pedido.total }}">
+    <a href="{% url 'lista_productos' %}">Guardar</a>
+  </form>
+  
 {% endblock %}

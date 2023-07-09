@@ -1,42 +1,46 @@
 {% extends 'telovendo3app/base.html' %}
 {% load static %}
-{%block Title%}Detalle Pedido{%endblock%}
 
 {% block content %}
-  <h1>Detalles del Pedido</h1>
+<section>
+  <div class="container">
+      <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-12 col-md-8 col-lg-6 login" style="width: max-content;">
+              <h1>Detalles del Pedido</h1>
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <h2>Pedido: {{ pedido }}</h2>
+                <h2>Estado: ({{ pedido.estado }})</h2>
+                <table class="table table-dark">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Precio Unitario</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for detalle in detalles %}
+                    <tr>
+                      <td>{{ detalle.producto.nombre }}</td>
+                      <td>{{ detalle.cantidad }}</td>
+                      <td>{{ detalle.precio_unitario }}</td>
+                      <td>{{ detalle.subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
+                  {% csrf_token %}
+                  <input type="text" name="total" value="{{ pedido.total }}">
+                  <a href="{% url 'lista_productos' %}" class="btn btn-danger my-2">Guardar</a>
+                </form>
+                <a href="{% url 'lista_productos' %}" class="btn btn-danger my-2" > Volver a agregar productos</a>
+                <p>Dirección de envío: {{ direccion_envio }}</p>
+              </div>  
+            </div>
+        </div>
+    </div>
+  </section>    
+  {% endblock %} 
 
-  <h2>Pedido: {{ pedido }}</h2>
-  <h2>Estado: ({{ pedido.estado }})</h2>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Subtotal</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for detalle in detalles %}
-      <tr>
-        <td>{{ detalle.producto.nombre }}</td>
-        <td>{{ detalle.cantidad }}</td>
-        <td>{{ detalle.precio_unitario }}</td>
-        <td>{{ detalle.subtotal }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <a href="{% url 'lista_productos' %}">Volver a agregar productos</a>
-
-  <p>Dirección de envío: {{ direccion_envio }}</p>
-
-  <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
-    {% csrf_token %}
-    <input type="text" name="total" value="{{ pedido.total }}">
-    <a href="{% url 'lista_productos' %}">Guardar</a>
-  </form>
-  
-{% endblock %}

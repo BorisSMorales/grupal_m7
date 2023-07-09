@@ -54,6 +54,7 @@ class Producto(models.Model):
     precio = models.IntegerField(null=False,blank=False)
     disponibilidad = models.IntegerField(null=False,blank=False)
     descripcion = models.CharField(max_length=200,null=True,blank=True)
+    imagen = models.ImageField(upload_to='imagen_productos', null=True)
 
     def __str__(self):
         return self.nombre

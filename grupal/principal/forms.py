@@ -122,12 +122,12 @@ class FormPedidogestion(forms.ModelForm):
     OPCIONES_ESTADO = [('Pendiente', 'Pendiente'), ('Procesando', 'En Proceso'), ('Enviado', 'Enviado'), ('Entregado', 'Entregado')]
 
     direccion_cliente = forms.ModelChoiceField(queryset=DireccionCliente.objects.none(), required=True)
-    total = forms.DecimalField(label='Total', required=True, error_messages={'required': 'El total es requerido'}, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total'}), help_text='Ingrese el total')
+    # total = forms.DecimalField(label='Total', required=True, error_messages={'required': 'El total es requerido'}, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total'}), help_text='Ingrese el total')
     estado = forms.ChoiceField(choices=OPCIONES_ESTADO, required=True, error_messages={'required': 'El estado es requerido'}, widget=forms.Select(attrs={'class': 'form-control'}), help_text='Seleccione el estado del pedido')
 
     class Meta:
         model = Pedido
-        fields = ['direccion_cliente', 'total', 'estado']
+        fields = ['direccion_cliente', 'estado']
 
     def __init__(self, cliente_id=None, *args, **kwargs):
         super().__init__(*args, **kwargs)

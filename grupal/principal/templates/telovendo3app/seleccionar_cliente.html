@@ -1,7 +1,9 @@
 {% extends 'telovendo3app/base.html' %}
+
 {%block Title%}Seleccionar Cliente{%endblock%}
 
 {% block content %}
+
 <section class="gradient-custom">
   <div class="container ">
       <div class="row d-flex justify-content-center align-items-center">
@@ -11,7 +13,7 @@
                 <form method="post">
                   {% csrf_token %}
                   {{ form.as_p }}
-                  <button type="submit">Continuar</button>
+                  <button class="btn btn-sm btn-danger" type="submit">Continuar</button>
                 </form>
               </div>
           </div>    

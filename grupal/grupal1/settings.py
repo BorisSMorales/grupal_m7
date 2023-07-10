@@ -76,14 +76,6 @@ WSGI_APPLICATION = 'grupal1.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'bacup', 
-    #     'USER': 'grupal_m7',
-    #     'PASSWORD': '123',
-    #     'HOST': 'localhost', 
-    #     'PORT': '5432',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'db_grupo4_0z3z', 
@@ -92,6 +84,14 @@ DATABASES = {
         'HOST': 'dpg-cil2gb95rnuvtgto5aj0-a.oregon-postgres.render.com', 
         'PORT': '5432',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'bacup', 
+    #     'USER': 'grupal_m7',
+    #     'PASSWORD': '123',
+    #     'HOST': 'localhost', 
+    #     'PORT': '5432',
+    # }
 
 }
 

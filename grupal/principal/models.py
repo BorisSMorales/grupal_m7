@@ -72,7 +72,6 @@ class Producto(models.Model):
             img.save(self.imagen.path)
 
 
-
 class Pedido(models.Model):
     fecha_pedido = models.DateField(auto_now_add=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)

@@ -140,13 +140,6 @@ class ActualizarEstadoPedidoView(View):
             return redirect('lista_pedidos')
         
 
-# class ListaProductosView(TemplateView):
-#     template_name = 'telovendo3app/lista_productos.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['productos'] = Producto.objects.all()
-#         return context
 class ListaProductosView(TemplateView):
     template_name = 'telovendo3app/lista_productos.html'
     form_class = AgregarProductoForm
@@ -263,32 +256,6 @@ class RegistroView(TemplateView):
 
         return render(request, self.template_name, {'form': form})
     
-
-# class AgregarProductoPedidoView(LoginRequiredMixin, TemplateView):
-#     template_name = 'telovendo3app/pedido_cliente.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         productos = Producto.objects.filter(disponibilidad__gt=0)
-#         productos_with_range = []
-#         for producto in productos:
-#             producto.disponibilidad_range = range(1, producto.disponibilidad + 1)
-#             productos_with_range.append(producto)
-#         context['productos'] = productos_with_range
-#         return context
-
-#     def post(self, request, *args, **kwargs):
-#         pedido, created = Pedido.objects.get_or_create(cliente=request.user, estado='pendiente')
-#         producto_id = request.POST.get('producto')
-#         cantidad = int(request.POST.get('cantidad'))
-
-#         producto = Producto.objects.get(id=producto_id)
-#         if cantidad <= producto.disponibilidad:
-#             detalle = DetallePedido(pedido=pedido, producto=producto, cantidad=cantidad, precio_unitario=producto.precio, subtotal=producto.precio * cantidad)
-#             detalle.save()
-
-#         return redirect('agregar_producto_pedido')
-
 class AgregarProductoPedidoView(View):
     template_name = 'telovendo3app/pedido_cliente.html'
     form_class = AgregarProductoForm
@@ -327,24 +294,11 @@ class AgregarProductoPedidoView(View):
 
         return render(request, self.template_name, {'form': form})
 
-
-# class DetallesPedidoView(View):
-#     def get(self, request, pedido_id):
-#         pedido = get_object_or_404(Pedido, id=pedido_id)
-#         detalles = DetallePedido.objects.filter(pedido=pedido)
-#         direccion_envio = pedido.direccion_cliente.direccion  # Acceder a la dirección de envío
-        
-#         context = {
-#             'pedido': pedido,
-#             'detalles': detalles,
-#             'direccion_envio': direccion_envio,
-#         }
-#         return render(request, 'telovendo3app/detalle_pedido.html', context)
 class DetallesPedidoView(View):
     def get(self, request, pedido_id):
         pedido = get_object_or_404(Pedido, id=pedido_id)
         detalles = DetallePedido.objects.filter(pedido=pedido)
-        direccion_envio = pedido.direccion_cliente.direccion  # Acceder a la dirección de envío
+        direccion_envio = pedido.direccion_cliente.direccion  
         
         context = {
             'pedido': pedido,
@@ -357,9 +311,9 @@ class DetallesPedidoView(View):
     def post(self, request, pedido_id):
         pedido = get_object_or_404(Pedido, id=pedido_id)
         detalles = DetallePedido.objects.filter(pedido=pedido)
-        total = request.POST.get('total')  # Obtener el nuevo total del pedido del formulario
+        total = request.POST.get('total') 
 
-        # Actualizar el total del pedido
+        
         pedido.total = total
         pedido.save()
 
@@ -461,7 +415,7 @@ class PedidoGestionView(FormView):
         kwargs = super().get_form_kwargs()
         kwargs['cliente_id'] = int(self.kwargs['cliente_id'])
         return kwargs
-      
+
     def form_valid(self, form):
         pedido = form.save(commit=False)
         pedido.cliente_id = self.kwargs['cliente_id']
@@ -475,6 +429,8 @@ class DetallePedidoGestionView(View):
     def get(self, request, pedido_id):
         pedido = get_object_or_404(Pedido, id=pedido_id)
         detalles = DetallePedido.objects.filter(pedido=pedido)
+        pedido.total = DetallePedido.objects.filter(pedido=pedido).aggregate(total=Sum('subtotal'))['total']
+        pedido.save()
         return render(request, self.template_name, {'pedido': pedido, 'detalles': detalles})
     
 class AgregarDetallePedidoView(FormView):

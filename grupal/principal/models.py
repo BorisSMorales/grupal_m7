@@ -76,7 +76,7 @@ class Pedido(models.Model):
     fecha_pedido = models.DateField(auto_now_add=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     direccion_cliente = models.ForeignKey(DireccionCliente, on_delete=models.SET_NULL, null=True) 
-    total = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=False)
     estado = models.CharField(max_length=50,null=False,blank=False)
 
 
@@ -87,5 +87,5 @@ class DetallePedido(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2,null=False,blank=False)
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)

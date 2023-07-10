@@ -85,10 +85,10 @@ class EliminarPedidoForm(forms.Form):
 
 
 OPCIONES_ESTADO = [
-    ('pendiente', 'Pendiente'),
-    ('procesando', 'En proceso'),
-    ('enviado', 'Enviado'),
-    ('entregado', 'Entregado'),
+    ('Pendiente', 'Pendiente'),
+    ('Procesando', 'Procesando'),
+    ('Enviado', 'Enviado'),
+    ('Entregado', 'Entregado'),
 ]
 
 class ActualizarEstadoPedidoForm(forms.ModelForm):
@@ -130,10 +130,9 @@ class FormSeleccionarCliente(forms.Form):
     cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())
 
 class FormPedidogestion(forms.ModelForm):
-    OPCIONES_ESTADO = [('Pendiente', 'Pendiente'), ('Procesando', 'En Proceso'), ('Enviado', 'Enviado'), ('Entregado', 'Entregado')]
+    OPCIONES_ESTADO = [('Pendiente', 'Pendiente'), ('Procesando', 'Procesando'), ('Enviado', 'Enviado'), ('Entregado', 'Entregado')]
 
     direccion_cliente = forms.ModelChoiceField(queryset=DireccionCliente.objects.none(), required=True)
-    # total = forms.DecimalField(label='Total', required=True, error_messages={'required': 'El total es requerido'}, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total'}), help_text='Ingrese el total')
     estado = forms.ChoiceField(choices=OPCIONES_ESTADO, required=True, error_messages={'required': 'El estado es requerido'}, widget=forms.Select(attrs={'class': 'form-control'}), help_text='Seleccione el estado del pedido')
 
     class Meta:

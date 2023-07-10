@@ -41,7 +41,7 @@
                                 {% if user.is_staff  %}
                                     <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
                                 {% endif %}
-                                {% if user.is_authenticated and pedido.estado in "Pendiente,procesando" and pedido.cliente.id == user.id %}
+                                {% if user.is_authenticated and pedido.estado in "Pendiente, Procesando" and pedido.cliente.id == user.id %}
                                     <a class="btn btn-sm btn-danger" href="{% url 'eliminar_pedido' pedido.id %}" role="button">Eliminar</a>
                                 {% endif %}
         

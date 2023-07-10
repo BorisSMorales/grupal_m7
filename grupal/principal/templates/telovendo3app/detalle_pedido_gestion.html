@@ -35,6 +35,10 @@
                       </tbody>
                       
                   </table>
+                  <form method="post" action="{% url 'detalles_pedido' pedido_id=pedido.id %}">
+                    {% csrf_token %}
+                    <p style="padding-left: 270px;">Total: {{ pedido.total }}</p>
+                  </form><br>
                   <a type="submit" class="btn btn-danger" href="{% url 'agregar_detalle_pedido' pedido_id=pedido.id %}">Agregar Detalle</a>
 
               </div>

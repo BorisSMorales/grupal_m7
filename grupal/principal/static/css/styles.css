@@ -115,7 +115,7 @@ footer {
     background-color: black;
     color: white;
     padding: 5px;
-    
+    position: absolute;
     bottom: 0;
     width: 100%;
     -webkit-box-shadow: 0 -10px 5px 0 #FF0000;
